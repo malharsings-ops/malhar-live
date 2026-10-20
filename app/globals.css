@@ -2575,3 +2575,10 @@ html, body { overflow-x: clip; }
   .pick-current b { font-size: 1.15rem; }
   .pick-current small { font-size: 8px; }
 }
+
+/* Carousel dragging: no native image-drag or text selection to swallow the gesture */
+.flow { cursor: grab; -webkit-user-select: none; user-select: none; }
+.flow:active { cursor: grabbing; }
+.flow img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+/* While a finger is down the cards track it, so no easing fighting the drag. */
+.flow.is-dragging .flow-item { transition: none; }
