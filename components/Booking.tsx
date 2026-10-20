@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
 import Sparkles from './Sparkles'
 import VideoGrid from './VideoGrid'
@@ -21,6 +21,8 @@ const TABS = [
 
 export default function Booking() {
   const [fid, setFid] = useState<FormatId>('solo')
+  const [pickOpen, setPickOpen] = useState(false)
+  const detail = useRef<HTMLDivElement>(null)
 
   // Allow a shareable link such as /book?f=duo
   useEffect(() => {
@@ -34,11 +36,14 @@ export default function Booking() {
 
   const choose = (id: FormatId) => {
     setFid(id)
+    setPickOpen(false)
     try {
       window.history.replaceState(null, '', `/book?f=${id}`)
     } catch {
       /* ignore */
     }
+    // On a phone the cards fill the screen, so without this the tap looks like nothing happened.
+    detail.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const f = formats.find((x) => x.id === fid) ?? formats[0]
@@ -104,6 +109,7 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
                 ))}
               </div>
             </Reveal>
+            <div className="fmt-detail" ref={detail} />
             <Reveal>
               <p className="eyebrow fmt-now">
                 {f.number} — {f.name}
@@ -201,13 +207,47 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
       <Contact />
 
       <div className="pick-bar" role="region" aria-label="Your selection">
-        <span>
-          <small>Your pick</small>
-          <b>{f.name}</b>
-        </span>
+        <button
+          className="pick-current"
+          aria-expanded={pickOpen}
+          aria-haspopup="true"
+          onClick={() => setPickOpen((o) => !o)}
+        >
+          <small>Your pick — tap to change</small>
+          <b>
+            {f.name}
+            <i className={`pick-caret ${pickOpen ? 'up' : ''}`} aria-hidden="true" />
+          </b>
+        </button>
         <EnquireButton className="btn btn-gold" format={f.name}>
           Enquire <span aria-hidden="true">↗</span>
         </EnquireButton>
+
+        {pickOpen && (
+          <>
+            <button className="pick-scrim" aria-label="Close lineup picker" onClick={() => setPickOpen(false)} />
+            <div className="pick-menu" role="menu">
+              {formats.map((x) => (
+                <button
+                  key={x.id}
+                  role="menuitemradio"
+                  aria-checked={x.id === fid}
+                  className={x.id === fid ? 'on' : ''}
+                  onClick={() => choose(x.id)}
+                >
+                  <span className="pick-no">{x.number}</span>
+                  <span>
+                    <b>{x.name}</b>
+                    <small>{x.who}</small>
+                  </span>
+                  <span className="pick-tick" aria-hidden="true">
+                    {x.id === fid ? '✦' : ''}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   )
