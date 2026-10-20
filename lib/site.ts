@@ -13,7 +13,7 @@ export const site = {
   /** Add a number like '919876543210' to show a WhatsApp button. */
   whatsapp: '',
   /** Add a path like '/images/malhar-hero.jpg' (file in /public) to replace the hero artwork. */
-  heroImage: '',
+  heroImage: '/images/malhar-hero.jpg',
   spotifyArtist: '',
 }
 

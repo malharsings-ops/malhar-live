@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   title,
   description,
   keywords: ['Malhar Divekar', 'Malhar Live', 'live singer Pune', 'acoustic singer', 'wedding singer Pune', 'live band booking'],
-  openGraph: { title, description, type: 'website', locale: 'en_IN', siteName: 'Malhar Live' },
-  twitter: { card: 'summary', title, description },
+  openGraph: { title, description, type: 'website', locale: 'en_IN', siteName: 'Malhar Live', images: [{ url: '/images/malhar-og.jpg', width: 1200, height: 629, alt: 'Malhar Divekar performing live' }] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/images/malhar-og.jpg'] },
 }
 
 export const viewport: Viewport = {

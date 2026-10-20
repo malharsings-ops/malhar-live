@@ -388,7 +388,7 @@ a {
 .hero-photo {
   width: 100%;
   max-width: 520px;
-  aspect-ratio: 4/5;
+  aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: 999px 999px 28px 28px;
   border: 1px solid var(--line);
@@ -2074,5 +2074,14 @@ body:has(.pick-bar) footer {
   .days,
   .dow {
     gap: 4px;
+  }
+}
+.hero-photo {
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5), 0 0 80px rgba(191, 129, 85, 0.18);
+  background: var(--wine-deep);
+}
+@media (max-width: 700px) {
+  .hero-top .wordmark {
+    display: none;
   }
 }
