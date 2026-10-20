@@ -10,7 +10,8 @@ export default function About() {
           <h2 className="h2">Where every song feels like a conversation.</h2>
           <p className="lead">
             Malhar Live is the live performance project of {site.artist}, a {site.city}-based singer who writes and
-            performs original songs. Each evening is shaped around the room: gentle, soulful and personal.
+            performs his own songs. Live, he plays the Bollywood and indie music a room already loves, and slips his
+            originals in among them.
           </p>
           <p className="lead">
             Choose the setting that suits your celebration: a Solo with voice and guitar, a Duo with harmonies, or a

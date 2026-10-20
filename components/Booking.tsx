@@ -8,12 +8,11 @@ import TrackSlider from './TrackSlider'
 import Calendar from './Calendar'
 import MalharShowcase from './MalharShowcase'
 import Contact from './Contact'
-import { formats, inclusions, poolVideos, site, type FormatId } from '@/lib/site'
+import { formats, inclusions, poolVideos, repertoire, site, type FormatId } from '@/lib/site'
 import { enquire } from '@/lib/enquire'
 
 const TABS = [
   ['watch', 'Choose & watch'],
-  ['stories', 'Client stories'],
   ['listen', 'Listen'],
   ['live', 'Catch us live'],
   ['meet', 'Meet Malhar'],
@@ -46,6 +45,8 @@ export default function Booking() {
   // Until Malhar sends clips for each lineup, every lineup shows the same real shows.
   const ownVideos = f.videos.length > 0
   const videos = ownVideos ? f.videos : poolVideos
+  // Twelve "coming soon" tiles read worse than no section at all.
+  const hasStories = f.testimonials.some((t) => t.youtubeId)
 
   return (
     <>
@@ -117,6 +118,14 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
               </div>
               <div className="inclusions">
                 <p>
+                  <b>What he plays:</b> {repertoire.lead}
+                </p>
+                <div className="rep-tags">
+                  {repertoire.tags.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+                <p style={{ marginTop: 14 }}>
                   <b>Every evening:</b> {inclusions.set}
                 </p>
                 <ul>
@@ -146,6 +155,7 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
           </div>
         </section>
 
+        {hasStories && (
         <section id="stories" className="section bg-deep">
           <div className="container">
             <Reveal>
@@ -158,13 +168,17 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
             </Reveal>
           </div>
         </section>
+        )}
         <section id="listen" className="section bg-ink">
           <Sparkles count={20} />
           <div className="container center" style={{ position: 'relative' }}>
             <Reveal>
               <p className="eyebrow">Step 4 — hear the songs</p>
-              <h2 className="h2">Original songs, played your way.</h2>
-              <p className="lead">The same songs travel with every lineup. Slide through and press play.</p>
+              <h2 className="h2">The songs he wrote himself.</h2>
+              <p className="lead">
+                A live set is mostly the Bollywood and indie songs your guests already know. These are Malhar&rsquo;s
+                own, and they travel with every lineup.
+              </p>
             </Reveal>
             <Reveal delay={100}>
               <TrackSlider />

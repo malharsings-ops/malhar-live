@@ -11,7 +11,7 @@ export default function Watch() {
           <p className="eyebrow">On stage</p>
           <h2 className="h2">Malhar, live.</h2>
           <p className="lead" style={{ marginLeft: 0 }}>
-            Original songs the way they are meant to be heard — in a room, in one take, with no studio behind them.
+Real evenings, real rooms — Bollywood and indie sung live, with nothing hiding behind it.
           </p>
         </Reveal>
         <Reveal delay={80}>

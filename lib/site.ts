@@ -8,10 +8,13 @@ export const site = {
   artist: 'Malhar Divekar',
   city: 'Pune',
   email: 'malharsings@gmail.com',
+  /** Shown as a tap-to-call button. Indian clients call first. */
+  phone: '+919527621280',
+  phoneLabel: '+91 95276 21280',
   instagram: 'https://www.instagram.com/malharsings',
   instagramHandle: '@malharsings',
   /** Add a number like '919876543210' to show a WhatsApp button. */
-  whatsapp: '',
+  whatsapp: '919527621280',
   /** Add a path like '/images/malhar-hero.jpg' (file in /public) to replace the hero artwork. */
   /** Portrait crop (used in the Meet Malhar section). */
   heroImage: '/images/gallery/studio-02.jpg',
@@ -19,7 +22,13 @@ export const site = {
   heroWide: '/images/malhar-hero-wide.jpg',
   /** Wide photo for the /book page hero. */
   bookImage: '/images/malhar-book.jpg',
-  spotifyArtist: '',
+  spotifyArtist: 'https://open.spotify.com/artist/2FMfij9wKbvg8yQHf2JJI8',
+}
+
+/** What a live set is actually made of. Honest with clients, and it is what they search for. */
+export const repertoire = {
+  lead: 'Bollywood and indie favourites, with his own songs woven through the night.',
+  tags: ['Bollywood', 'Indie', 'Acoustic covers', 'Malhar originals', 'Requests welcome'],
 }
 
 export type Track = { id: string; title: string }
@@ -217,5 +226,5 @@ export const bookings: Booking[] = []
 export const stats = [
   { value: '2250+', label: 'Live shows', note: 'Performed to date' },
   { value: '3', label: 'Countries', note: 'India, Kuwait & Ghana' },
-  { value: 'Original', label: 'Songs', note: 'Written & performed live' },
+  { value: 'Bollywood', label: 'Indie & originals', note: 'Requests always welcome' },
 ]

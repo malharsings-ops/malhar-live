@@ -15,7 +15,7 @@ export default function Artist() {
           <div className="prose">
             <p>
               {site.artist} is a singer-songwriter based in {site.city}. Inspired by the effortless, soulful storytelling
-              of Lucky Ali, he writes and performs original songs that feel honest, warm and close.
+              of Lucky Ali, he writes songs that feel honest, warm and close.
             </p>
             <p>
               Malhar Live is where those songs meet the room. More than 2250 shows have taken him from Pune&rsquo;s
@@ -23,8 +23,9 @@ export default function Artist() {
               songs, sung live, with nothing hiding behind them.
             </p>
             <p>
-              Some nights it is a voice and a guitar. Others it is a full band. Either way the evening is built around
-              the people in front of him, not a setlist on paper.
+              On stage the set belongs to the room: the Bollywood and indie songs everyone already knows, sung live
+              with voice and guitar, and his own songs placed where they land best. Some nights it is a voice and a
+              guitar. Others it is a full band.
             </p>
           </div>
         </Reveal>

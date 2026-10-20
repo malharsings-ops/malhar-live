@@ -5,7 +5,7 @@ import { site } from '@/lib/site'
 const PROOF = [
   ['2250+', 'live shows'],
   ['3', 'countries'],
-  ['100%', 'original songs'],
+  ['Pune', 'home base'],
 ]
 
 export default function Hero() {
@@ -30,8 +30,8 @@ export default function Hero() {
           <p className="hero-by">by {site.artist}</p>
           <p className="hero-tag">Soulful originals, played live.</p>
           <p className="hero-copy">
-            Songs Malhar writes himself, carried by voice and acoustic guitar — and more than 2250 nights of playing
-            them to a live room, from Pune to Kuwait and West Africa.
+            Bollywood and indie, sung live with voice and acoustic guitar — plus songs Malhar writes himself. More
+            than 2250 nights of it, from Pune to Kuwait and West Africa.
           </p>
           <div className="hero-cta">
             <a href="/#music" className="btn btn-gold">

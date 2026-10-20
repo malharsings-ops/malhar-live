@@ -2481,3 +2481,11 @@ html, body { overflow-x: clip; }
   }
   .hero-bg img { width: 100%; }
 }
+
+/* Repertoire tags */
+.rep-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 0; }
+.rep-tags span {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-soft); color: var(--muted);
+}
+.spotify-follow { margin-top: 20px; }

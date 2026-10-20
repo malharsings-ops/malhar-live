@@ -1,7 +1,7 @@
 import Reveal from './Reveal'
 import Sparkles from './Sparkles'
 import TrackSlider from './TrackSlider'
-import { tracks } from '@/lib/site'
+import { site, tracks } from '@/lib/site'
 
 export default function Releases() {
   if (!tracks.length) return null
@@ -13,7 +13,14 @@ export default function Releases() {
         <Reveal>
           <p className="eyebrow">Malhar Divekar · Original Songs</p>
           <h2 className="h2">Songs from the heart.</h2>
-          <p className="lead">Every song is an original, written and performed by Malhar.</p>
+          <p className="lead">
+            Away from the covers, these are Malhar&rsquo;s own songs — written, sung and released by him.
+          </p>
+          {site.spotifyArtist && (
+            <a className="btn btn-ghost spotify-follow" href={site.spotifyArtist} target="_blank" rel="noopener noreferrer">
+              Follow on Spotify <span aria-hidden="true">↗</span>
+            </a>
+          )}
         </Reveal>
         <Reveal delay={100}>
           <TrackSlider />

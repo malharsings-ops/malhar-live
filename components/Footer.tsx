@@ -21,11 +21,21 @@ export default function Footer() {
           Follow our journey
         </p>
         <div className="social">
+          {site.phone && <a href={`tel:${site.phone}`}><span aria-hidden="true">📞</span> {site.phoneLabel}</a>}
+          {site.whatsapp && (
+            <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer">
+              <span aria-hidden="true">💬</span> WhatsApp
+            </a>
+          )}
           <a href={site.instagram} target="_blank" rel="noopener noreferrer">
             <Insta /> {site.instagramHandle}
           </a>
-          {tracks[0] && (
-            <a href={`https://open.spotify.com/track/${tracks[0].id}`} target="_blank" rel="noopener noreferrer">
+          {(site.spotifyArtist || tracks[0]) && (
+            <a
+              href={site.spotifyArtist || `https://open.spotify.com/track/${tracks[0].id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <span aria-hidden="true">♪</span> Spotify
             </a>
           )}
