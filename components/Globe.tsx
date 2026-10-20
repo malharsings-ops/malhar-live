@@ -35,9 +35,9 @@ export default function Globe() {
         diffuse: 1.3,
         mapSamples: 16000,
         mapBrightness: 6,
-        baseColor: [0.12, 0.15, 0.3],
-        markerColor: [0.91, 0.74, 0.44],
-        glowColor: [0.45, 0.08, 0.14],
+        baseColor: [0.1, 0.2, 0.16],
+        markerColor: [0.75, 0.51, 0.33],
+        glowColor: [0.2, 0.36, 0.28],
         markers: destinations.map((d) => ({
           location: [d.lat, d.lng] as [number, number],
           size: d.home ? 0.09 : 0.05,

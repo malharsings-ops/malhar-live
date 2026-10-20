@@ -40,7 +40,7 @@ export default function Sparkles({ count = 34 }: { count?: number }) {
     const tick = () => {
       if (visible) {
         ctx.clearRect(0, 0, w, h)
-        ctx.fillStyle = '#e8bc70'
+        ctx.fillStyle = '#bf8155'
         for (const d of dots) {
           d.x += d.vx
           d.y += d.vy

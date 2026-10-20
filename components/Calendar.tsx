@@ -134,21 +134,21 @@ export default function Calendar({
 
             <div className="legend">
               <span>
-                <i style={{ background: '#e0708a' }} />
+                <i style={{ background: '#d9826a' }} />
                 Booked
               </span>
               {showLive && (
                 <span>
-                  <i style={{ background: '#e8bc70' }} />
+                  <i style={{ background: '#bf8155' }} />
                   Catch us live
                 </span>
               )}
               <span>
-                <i style={{ border: '2px solid #e8bc70' }} />
+                <i style={{ border: '2px solid #bf8155' }} />
                 Popular weekend
               </span>
               <span>
-                <i style={{ background: '#6fb59a' }} />
+                <i style={{ background: '#9cab92' }} />
                 Open for enquiries
               </span>
             </div>
