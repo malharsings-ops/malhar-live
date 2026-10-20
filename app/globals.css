@@ -2281,3 +2281,52 @@ body:has(.pick-bar) footer {
     top: 64px;
   }
 }
+
+/* /book hero with photo */
+.book-hero:has(.hero-bg) {
+  background: #172b25;
+}
+.book-hero .hero-bg {
+  height: auto;
+  bottom: 0;
+}
+.book-left {
+  text-align: left;
+}
+.book-left .lead {
+  max-width: 520px;
+  margin-left: 0;
+}
+.book-left .fmt-grid {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+}
+@media (min-width: 900px) {
+  .book-hero {
+    padding-top: 170px;
+  }
+}
+@media (min-width: 900px) {
+  .book-hero .hero-bg img {
+    object-position: 65% 12%;
+  }
+}
+@media (max-width: 899px) {
+  .book-hero .hero-bg {
+    height: 62svh;
+    bottom: auto;
+  }
+  .book-hero .hero-bg img {
+    width: 100%;
+    object-position: 70% 12%;
+  }
+  .book-hero .hero-bg::after {
+    background:
+      linear-gradient(180deg, #172b25 0%, rgba(23, 43, 37, 0.4) 12%, transparent 30%),
+      linear-gradient(0deg, #172b25 0%, rgba(23, 43, 37, 0.92) 18%, transparent 70%);
+  }
+  .book-hero {
+    padding-top: 40svh;
+  }
+}

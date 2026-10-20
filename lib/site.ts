@@ -17,6 +17,8 @@ export const site = {
   heroImage: '/images/malhar-hero.jpg',
   /** Wide full-bleed hero photo. */
   heroWide: '/images/malhar-hero-wide.jpg',
+  /** Wide photo for the /book page hero. */
+  bookImage: '/images/malhar-book.jpg',
   spotifyArtist: '',
 }
 

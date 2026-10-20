@@ -8,7 +8,7 @@ import TrackSlider from './TrackSlider'
 import Calendar from './Calendar'
 import MalharShowcase from './MalharShowcase'
 import Contact from './Contact'
-import { formats, type FormatId } from '@/lib/site'
+import { formats, site, type FormatId } from '@/lib/site'
 import { enquire } from '@/lib/enquire'
 
 const TABS = [
@@ -47,8 +47,14 @@ export default function Booking() {
   return (
     <>
       <section className="book-hero">
-        <Sparkles count={26} />
-        <div className="container center" style={{ position: 'relative' }}>
+        {site.bookImage && (
+          <div className="hero-bg" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={site.bookImage} alt="" fetchPriority="high" />
+          </div>
+        )}
+        <Sparkles count={16} />
+        <div className="container book-left" style={{ position: 'relative' }}>
           <p className="eyebrow">Book Malhar Live</p>
           <h1 className="h1 book-h1">Choose your evening.</h1>
           <p className="lead">
