@@ -2509,17 +2509,12 @@ html, body { overflow-x: clip; }
   color: var(--gold); background: rgba(12, 24, 20, 0.6);
   border-color: var(--line); transform: translateX(2px);
 }
-.social-rail::after {
-  content: ''; width: 1px; height: 56px; margin: 8px auto 0;
-  background: linear-gradient(180deg, var(--line), transparent);
-}
 /* Below the copy on small screens, where a side rail would sit over the photo. */
 @media (max-width: 1100px) {
   .social-rail {
     position: static; transform: none; flex-direction: row; gap: 6px;
     margin-top: 26px; padding: 0 var(--pad);
   }
-  .social-rail::after { display: none; }
   .social-rail a { width: 44px; height: 44px; border-color: var(--line-soft); background: rgba(12, 24, 20, 0.45); }
 }
 .rail-narrow { display: none; }
