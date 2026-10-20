@@ -264,13 +264,13 @@ export default function Calendar({
                 )}
                 <p className="lead" style={{ marginTop: 14 }}>
                   {selBooked
-                    ? 'This date is taken. Pick another date, or write to ask about other formats and nearby days.'
-                    : 'This date is currently open. Tell us about your event and we will confirm availability and a quote.'}
+                    ? 'This date is taken. Pick another date, or message Malhar about nearby days.'
+                    : 'This date is currently open. Send Malhar a WhatsApp and he will confirm it himself.'}
                 </p>
                 <div className="panel-actions">
                   {!selBooked && (
                     <button className="btn btn-gold" onClick={() => enquire({ date: selected })}>
-                      Enquire for this date
+                      WhatsApp about this date
                     </button>
                   )}
                   <a

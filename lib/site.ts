@@ -23,6 +23,7 @@ export const site = {
   /** Wide photo for the /book page hero. */
   bookImage: '/images/malhar-book.jpg',
   spotifyArtist: 'https://open.spotify.com/artist/2FMfij9wKbvg8yQHf2JJI8',
+  youtube: 'https://www.youtube.com/channel/UCZC-4N8MLmSFi9QRPM8-ojA',
 }
 
 /** What a live set is actually made of. Honest with clients, and it is what they search for. */

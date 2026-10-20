@@ -147,7 +147,7 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
                 <div className="band-cta">
                   <p>Planning something bigger? Tell us the occasion, the stage and the feel, and we will shape a lineup.</p>
                   <button className="btn btn-gold" onClick={() => enquire({ format: f.name })}>
-                    Enquire for a bigger band ↗
+                    WhatsApp about a bigger band ↗
                   </button>
                 </div>
               )}

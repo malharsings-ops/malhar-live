@@ -1,5 +1,6 @@
 import Sparkles from './Sparkles'
 import StickyPlayer from './StickyPlayer'
+import SocialRail from './SocialRail'
 import { site } from '@/lib/site'
 
 const PROOF = [
@@ -18,6 +19,9 @@ export default function Hero() {
         </div>
       )}
       <Sparkles count={14} />
+      <div className="rail-wide">
+        <SocialRail />
+      </div>
 
       <div className="container hero-grid has-bg">
         <div>
@@ -48,6 +52,9 @@ export default function Hero() {
                 {l}
               </span>
             ))}
+          </div>
+          <div className="rail-narrow">
+            <SocialRail />
           </div>
         </div>
       </div>
