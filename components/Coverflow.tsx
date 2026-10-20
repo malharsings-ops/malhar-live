@@ -54,15 +54,18 @@ export default function Coverflow<T>({ items, render, onCenter, label, onChange 
           const off = d > n / 2 ? d - n : d
           const abs = Math.abs(off)
           const active = off === 0
+          const x = off === 0 ? 0 : Math.sign(off) * (54 + (abs - 1) * 26)
+          const fade = [1, 0.85, 0.6, 0.35][abs] ?? 0
           return (
             <div
               key={i}
               className={`flow-item ${active ? 'is-active' : ''}`}
               style={{
-                transform: `translateX(calc(-50% + ${off * 58}%)) scale(${1 - abs * 0.16})`,
-                opacity: abs > 1 ? 0 : active ? 1 : 0.55,
+                transform: `translateX(calc(-50% + ${x}%)) scale(${1 - abs * 0.1})`,
+                opacity: abs > 3 ? 0 : fade,
+                filter: active ? 'none' : `blur(${abs * 2.5 + 1.5}px) brightness(0.85)`,
                 zIndex: 10 - abs,
-                pointerEvents: abs > 1 ? 'none' : 'auto',
+                pointerEvents: abs > 3 ? 'none' : 'auto',
               }}
               onClick={() => (active ? onCenter?.(i) : go(i))}
               aria-hidden={abs > 1}

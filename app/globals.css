@@ -716,7 +716,8 @@ a {
   left: 50%;
   width: min(62%, 480px);
   height: 100%;
-  transition: transform 0.55s cubic-bezier(0.22, 0.8, 0.3, 1), opacity 0.55s;
+  transition: transform 0.55s cubic-bezier(0.22, 0.8, 0.3, 1), opacity 0.55s, filter 0.55s;
+  will-change: transform, filter;
   cursor: pointer;
 }
 .flow-item.is-active {
@@ -1929,4 +1930,14 @@ body:has(.pick-bar) footer {
   .fmt-panel #watch {
     padding-top: 28px;
   }
+}
+
+/* Frosted depth: sharp gold-framed centre, blurred cards behind */
+.flow-item.is-active .photo {
+  border: 2px solid var(--gold);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(232, 188, 112, 0.25);
+}
+.flow-item:not(.is-active) .photo,
+.flow-item:not(.is-active) .release {
+  border-color: rgba(232, 188, 112, 0.18);
 }
