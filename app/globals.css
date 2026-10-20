@@ -1911,3 +1911,22 @@ body:has(.pick-bar) footer {
   font-size: clamp(1.3rem, 2.6vw, 1.9rem);
 }
 .fmt-panel section, #live, #meet { scroll-margin-top: 120px; }
+
+/* Tighter flow from selector to content */
+.book-hero {
+  padding-bottom: 36px;
+}
+.dash-tabs-in {
+  padding-block: 6px;
+}
+.fmt-panel #watch {
+  padding-top: 40px;
+}
+.fmt-panel #watch .sub-h {
+  margin-top: 28px;
+}
+@media (max-width: 600px) {
+  .fmt-panel #watch {
+    padding-top: 28px;
+  }
+}
