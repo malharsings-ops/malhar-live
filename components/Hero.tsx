@@ -16,24 +16,6 @@ export default function Hero() {
         </div>
       )}
       <Sparkles count={site.heroWide ? 14 : 28} />
-      <header className="hero-top">
-        <a href="/#home" className="wordmark">
-          MALHAR LIVE
-          <small>by {site.artist}</small>
-        </a>
-        <div className="hero-pills" aria-label="Performance formats">
-          <a href="/#moments">
-            <b>Solo</b> — Voice &amp; Guitar
-          </a>
-          <a href="/#moments">
-            <b>Duo</b> — Harmonies
-          </a>
-          <a href="/#moments">
-            <b>Trio</b> — Full Band
-          </a>
-        </div>
-        <span style={{ width: 110 }} className="hide-sm" aria-hidden="true" />
-      </header>
 
       <div className={`container hero-grid ${site.heroWide ? 'has-bg' : ''}`}>
         <div>
