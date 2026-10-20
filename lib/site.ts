@@ -185,16 +185,10 @@ export type Destination = { name: string; country: string; lat: number; lng: num
 export const destinations: Destination[] = [
   { name: 'Pune', country: 'India', lat: 18.5204, lng: 73.8567, home: true },
   { name: 'Mumbai', country: 'India', lat: 19.076, lng: 72.8777 },
-  { name: 'Lonavala', country: 'India', lat: 18.7546, lng: 73.4062 },
-  { name: 'Mahabaleshwar', country: 'India', lat: 17.9237, lng: 73.6586 },
-  { name: 'Nashik', country: 'India', lat: 19.9975, lng: 73.7898 },
-  { name: 'Goa', country: 'India', lat: 15.2993, lng: 74.124 },
-  { name: 'Bengaluru', country: 'India', lat: 12.9716, lng: 77.5946 },
-  { name: 'Hyderabad', country: 'India', lat: 17.385, lng: 78.4867 },
-  { name: 'Ahmedabad', country: 'India', lat: 23.0225, lng: 72.5714 },
-  { name: 'Udaipur', country: 'India', lat: 24.5854, lng: 73.7125 },
-  { name: 'Jaipur', country: 'India', lat: 26.9124, lng: 75.7873 },
   { name: 'Delhi', country: 'India', lat: 28.6139, lng: 77.209 },
+  { name: 'Jim Corbett', country: 'India', lat: 29.5300, lng: 78.7747 },
+  { name: 'Kuwait City', country: 'Kuwait', lat: 29.3759, lng: 47.9774 },
+  { name: 'Accra', country: 'Ghana · West Africa', lat: 5.6037, lng: -0.187 },
 ]
 
 export type Booking = { date: string; city: string }
@@ -203,7 +197,7 @@ export type Booking = { date: string; city: string }
 export const bookings: Booking[] = []
 
 export const stats = [
-  { value: '3', label: 'Performance formats', note: 'Solo, Duo & Trio' },
-  { value: 'Pune', label: 'Home base', note: 'Available across India' },
+  { value: '2250+', label: 'Live shows', note: 'Performed to date' },
+  { value: '3', label: 'Countries', note: 'India, Kuwait & Ghana' },
   { value: 'Original', label: 'Songs', note: 'Written & performed live' },
 ]

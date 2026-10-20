@@ -88,7 +88,7 @@ export default function Globe() {
           <p className="eyebrow">Our performance journey</p>
           <h2 className="h2">Music beyond boundaries.</h2>
           <p className="lead">
-            Based in Pune and available across India. Select a city to explore, or drag the globe to turn it.
+            2250+ live shows from Pune to Kuwait and Ghana. Select a city to explore, or drag the globe to turn it.
           </p>
         </Reveal>
 
@@ -114,10 +114,10 @@ export default function Globe() {
         </div>
 
         <div className="dest" style={{ textAlign: 'left' }}>
-          <p className="eyebrow">Performance destinations</p>
+          <p className="eyebrow">Where Malhar has performed</p>
           <h3>{d.name}</h3>
-          <p className="lead" style={{ marginTop: 8 }}>
-            {d.home ? `Home base · ${d.country}` : `Available to perform · ${d.country}`}
+          <p className="lead" style={{ marginTop: 8, marginLeft: 0 }}>
+            {d.home ? `Home base · ${d.country}` : `Performed live · ${d.country}`}
           </p>
           <div className="dest-chips" role="group" aria-label="Destinations">
             {destinations.map((x, i) => (
@@ -129,7 +129,7 @@ export default function Globe() {
             ))}
           </div>
           <p className="fineprint" style={{ marginTop: 22 }}>
-            Cities show where Malhar is available to perform, not a tour history. Travelling elsewhere? Just ask.
+            2250+ shows across India, Kuwait and West Africa, including many of Pune’s best venues. Planning an event elsewhere? Just ask.
           </p>
         </div>
       </div>
