@@ -20,10 +20,10 @@ export default function Home() {
       <Artist />
       <Calendar
         id="shows"
-        showsOnly
+        showLive
         eyebrow="Catch Malhar live"
         title="Where you can hear him next."
-        lead="Upcoming shows. Come for an evening of original songs."
+        lead="Upcoming shows below. Pick any date to see where it stands, then message Malhar about it."
       />
       <Globe />
       <Journal />

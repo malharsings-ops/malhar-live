@@ -9,7 +9,7 @@ import Calendar from './Calendar'
 import MalharShowcase from './MalharShowcase'
 import Contact from './Contact'
 import { formats, inclusions, poolVideos, repertoire, site, type FormatId } from '@/lib/site'
-import { enquire } from '@/lib/enquire'
+import EnquireButton from './EnquireButton'
 
 const TABS = [
   ['watch', 'Choose & watch'],
@@ -146,9 +146,9 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
               {f.custom && (
                 <div className="band-cta">
                   <p>Planning something bigger? Tell us the occasion, the stage and the feel, and we will shape a lineup.</p>
-                  <button className="btn btn-gold" onClick={() => enquire({ format: f.name })}>
-                    WhatsApp about a bigger band ↗
-                  </button>
+                  <EnquireButton className="btn btn-gold" format={f.name}>
+                    Enquire about a bigger band <span aria-hidden="true">↗</span>
+                  </EnquireButton>
                 </div>
               )}
             </Reveal>
@@ -205,9 +205,9 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
           <small>Your pick</small>
           <b>{f.name}</b>
         </span>
-        <button className="btn btn-gold" onClick={() => enquire({ format: f.name })}>
-          Enquire ↗
-        </button>
+        <EnquireButton className="btn btn-gold" format={f.name}>
+          Enquire <span aria-hidden="true">↗</span>
+        </EnquireButton>
       </div>
     </>
   )

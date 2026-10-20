@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import Reveal from './Reveal'
 import { bookings, liveShows, sampleShows, site, type Show } from '@/lib/site'
-import { enquire } from '@/lib/enquire'
+import EnquireButton from './EnquireButton'
+import { shortDate } from '@/lib/enquire'
 
 const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
@@ -269,9 +270,9 @@ export default function Calendar({
                 </p>
                 <div className="panel-actions">
                   {!selBooked && (
-                    <button className="btn btn-gold" onClick={() => enquire({ date: selected })}>
-                      WhatsApp about this date
-                    </button>
+                    <EnquireButton className="btn btn-gold" date={selected}>
+                      Enquire for {shortDate(selected)} <span aria-hidden="true">↗</span>
+                    </EnquireButton>
                   )}
                   <a
                     className="btn btn-ghost"

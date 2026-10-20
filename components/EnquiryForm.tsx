@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from 'react'
 import { site } from '@/lib/site'
-import type { EnquiryDetail } from '@/lib/enquire'
+import { whatsappUrl, type EnquiryDetail } from '@/lib/enquire'
 
 const EVENTS = ['Wedding', 'Sangeet / Reception', 'Private celebration', 'Corporate event', 'Venue / Restaurant', 'Other']
 const FORMATS = ['Not sure yet', 'Solo', 'Duo', 'Trio', 'Bigger Band']
@@ -27,18 +27,22 @@ export default function EnquiryForm() {
     e.preventDefault()
     const f = new FormData(e.currentTarget)
     const v = (k: string) => String(f.get(k) ?? '').trim()
-    const body = [
+    const lines = [
       `Name: ${v('name')}`,
-      `Phone / WhatsApp: ${v('phone')}`,
-      `Event type: ${v('event')}`,
-      `Format: ${v('format')}`,
-      `Date: ${v('date') || 'Not decided'}`,
-      `City / venue: ${v('city')}`,
-      '',
-      v('message'),
-    ].join('\n')
-    const subject = `Enquiry — ${v('event')} — ${v('date') || 'date TBD'}`
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      `Phone: ${v('phone')}`,
+      `Event: ${v('event')}`,
+      `City / venue: ${v('city') || 'To confirm'}`,
+      v('message') ? `\n${v('message')}` : '',
+    ].filter(Boolean)
+
+    const wa = whatsappUrl({ date: v('date'), format: v('format'), lines })
+    if (wa) {
+      // Opened from inside a submit handler the user triggered, so it is not a pop-up.
+      window.location.href = wa
+    } else {
+      const subject = `Enquiry — ${v('event')} — ${v('date') || 'date TBD'}`
+      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`
+    }
     setSent(true)
   }
 
@@ -89,13 +93,17 @@ export default function EnquiryForm() {
           <textarea id="message" name="message" rows={4} placeholder="Guests, timings, the feel you want…" />
         </div>
         <button className="btn btn-gold btn-block" type="submit">
-          Send enquiry ↗
+          {site.whatsapp ? 'Send on WhatsApp ↗' : 'Send enquiry ↗'}
         </button>
       </div>
       <p className="form-note" role="status">
-        {sent
-          ? 'Your email app should now open with the enquiry ready to send. If it did not, write to ' + site.email + '.'
-          : 'This opens your email app with the details filled in. No account needed.'}
+        {site.whatsapp
+          ? sent
+            ? `WhatsApp should now be open with your enquiry ready to send. If not, message ${site.phoneLabel}.`
+            : 'This opens WhatsApp with your details written out — just press send. Malhar replies himself.'
+          : sent
+            ? `Your email app should now open with the enquiry ready to send. If it did not, write to ${site.email}.`
+            : 'This opens your email app with the details filled in. No account needed.'}
       </p>
     </form>
   )
