@@ -39,7 +39,8 @@ body {
   overflow-x: hidden;
 }
 section[id] {
-  scroll-margin-top: 20px;
+  /* Clears the floating nav pill when jumping to an anchor. */
+  scroll-margin-top: 96px;
 }
 a {
   color: inherit;

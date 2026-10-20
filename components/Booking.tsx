@@ -8,7 +8,7 @@ import TrackSlider from './TrackSlider'
 import Calendar from './Calendar'
 import MalharShowcase from './MalharShowcase'
 import Contact from './Contact'
-import { formats, inclusions, site, type FormatId } from '@/lib/site'
+import { formats, inclusions, poolVideos, site, type FormatId } from '@/lib/site'
 import { enquire } from '@/lib/enquire'
 
 const TABS = [
@@ -43,6 +43,9 @@ export default function Booking() {
   }
 
   const f = formats.find((x) => x.id === fid) ?? formats[0]
+  // Until Malhar sends clips for each lineup, every lineup shows the same real shows.
+  const ownVideos = f.videos.length > 0
+  const videos = ownVideos ? f.videos : poolVideos
 
   return (
     <>
@@ -124,9 +127,13 @@ Pick the lineup that suits your evening, watch it live, hear the songs and check
               </div>
             </Reveal>
             <Reveal delay={80}>
-              <h3 className="sub-h">Step 2 — watch the {f.name} live</h3>
-              <p className="sub-lead">Three performances with this exact lineup. Tap any video to play it.</p>
-              <VideoGrid videos={f.videos} />
+              <h3 className="sub-h">{ownVideos ? `Step 2 — watch the ${f.name} live` : 'Step 2 — watch Malhar live'}</h3>
+              <p className="sub-lead">
+                {ownVideos
+                  ? 'Performances with this exact lineup. Tap any video to play it.'
+                  : 'Clips from recent shows. Tap any video to play it — footage of this exact lineup is on its way.'}
+              </p>
+              <VideoGrid videos={videos} />
               {f.custom && (
                 <div className="band-cta">
                   <p>Planning something bigger? Tell us the occasion, the stage and the feel, and we will shape a lineup.</p>

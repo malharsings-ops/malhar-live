@@ -14,7 +14,7 @@ export const site = {
   whatsapp: '',
   /** Add a path like '/images/malhar-hero.jpg' (file in /public) to replace the hero artwork. */
   /** Portrait crop (used in the Meet Malhar section). */
-  heroImage: '/images/malhar-hero.jpg',
+  heroImage: '/images/gallery/studio-02.jpg',
   /** Wide full-bleed hero photo. */
   heroWide: '/images/malhar-hero-wide.jpg',
   /** Wide photo for the /book page hero. */
@@ -32,11 +32,22 @@ export const tracks: Track[] = [
 
 export type Video = { title: string; youtubeId?: string }
 
-/** Three performance videos for the homepage. Paste YouTube ids to make them playable. */
+/**
+ * Real performance clips. These are the दी Jolly Pipers uploads from Malhar's
+ * channel, so they are labelled by the event rather than by lineup.
+ */
 export const reel: Video[] = [
-  { title: 'Live in Pune — original set' },
-  { title: 'Unplugged — one take' },
-  { title: 'On stage — full band night' },
+  { title: 'Flame University Fest — show reel', youtubeId: 'SW0GNz8VCAk' },
+  { title: 'Flame University Fest — full set', youtubeId: 'Gui4AgSkbFM' },
+  { title: 'Ivy Lawns Flea Market', youtubeId: 'iVvomjWrHKM' },
+]
+
+/** Shown on the booking page for any lineup that has no clips of its own yet. */
+export const poolVideos: Video[] = [
+  { title: 'Flame University Fest — show reel', youtubeId: 'SW0GNz8VCAk' },
+  { title: 'Ivy Lawns Flea Market', youtubeId: 'iVvomjWrHKM' },
+  { title: 'Flame University Fest — full set', youtubeId: 'Gui4AgSkbFM' },
+  { title: 'Ivy Lawns Flea Market — second set', youtubeId: 'ibD6qifIRyA' },
 ]
 
 export type FormatId = 'solo' | 'duo' | 'trio' | 'band'
@@ -70,11 +81,7 @@ export const formats: Format[] = [
     tagline: 'An intimate, unplugged evening with a light setup. Malhar sings and plays, and the room does the rest.',
     hours: '2 hours · one 20-min break',
     lineup: ['Vocals', 'Acoustic guitar'],
-    videos: [
-      { title: 'Solo — Live Performance 1' },
-      { title: 'Solo — Live Performance 2' },
-      { title: 'Solo — Live Performance 3' },
-    ],
+    videos: [],
     testimonials: [
       { title: 'Client story 1 · Solo' },
       { title: 'Client story 2 · Solo' },
@@ -91,11 +98,7 @@ export const formats: Format[] = [
     tagline: 'Keys add warmth and depth under the vocals, for longer, livelier evenings.',
     hours: '2 hours · one 20-min break',
     lineup: ['Vocals', 'Acoustic guitar', 'Keyboard'],
-    videos: [
-      { title: 'Duo — Live Performance 1' },
-      { title: 'Duo — Live Performance 2' },
-      { title: 'Duo — Live Performance 3' },
-    ],
+    videos: [],
     testimonials: [
       { title: 'Client story 1 · Duo' },
       { title: 'Client story 2 · Duo' },
@@ -112,11 +115,7 @@ export const formats: Format[] = [
     tagline: 'Drums bring the energy up. A complete live sound for stages, celebrations and big nights.',
     hours: '2 hours · one 20-min break',
     lineup: ['Vocals', 'Acoustic guitar', 'Keyboard', 'Drums'],
-    videos: [
-      { title: 'Trio — Live Performance 1' },
-      { title: 'Trio — Live Performance 2' },
-      { title: 'Trio — Live Performance 3' },
-    ],
+    videos: [],
     testimonials: [
       { title: 'Client story 1 · Trio' },
       { title: 'Client story 2 · Trio' },
@@ -134,11 +133,7 @@ export const formats: Format[] = [
     hours: '2 hours · one 20-min break',
     lineup: ['Custom lineup', 'Added instruments', 'Sound planning'],
     custom: true,
-    videos: [
-      { title: 'Full band — Live Performance 1' },
-      { title: 'Full band — Live Performance 2' },
-      { title: 'Full band — Live Performance 3' },
-    ],
+    videos: [],
     testimonials: [
       { title: 'Client story 1 · Band' },
       { title: 'Client story 2 · Band' },
@@ -187,13 +182,20 @@ export type Photo = { src?: string; alt: string }
 
 /** Replace with real photos: { src: '/images/photo-01.jpg', alt: 'Malhar live at …' } */
 export const gallery: Photo[] = [
-  { alt: 'Performance photo 1' },
-  { alt: 'Performance photo 2' },
-  { alt: 'Performance photo 3' },
-  { alt: 'Performance photo 4' },
-  { alt: 'Performance photo 5' },
-  { alt: 'Performance photo 6' },
-  { alt: 'Performance photo 7' },
+  { src: '/images/gallery/live-01.jpg', alt: 'Malhar singing live under stage lights' },
+  { src: '/images/gallery/live-02.jpg', alt: 'Malhar performing with guitar at a live event' },
+  { src: '/images/gallery/live-03.jpg', alt: 'Malhar singing with an acoustic guitar at Sky Stories' },
+  { src: '/images/gallery/studio-01.jpg', alt: 'Malhar laughing while playing a travel guitar' },
+  { src: '/images/gallery/studio-02.jpg', alt: 'Malhar seated in warm studio light' },
+  { src: '/images/gallery/studio-03.jpg', alt: 'Portrait of Malhar Divekar' },
+  { src: '/images/gallery/studio-04.jpg', alt: 'Malhar in a printed hoodie, arms crossed' },
+  { src: '/images/gallery/studio-05.jpg', alt: 'Malhar photographed from the side' },
+  { src: '/images/gallery/studio-06.jpg', alt: 'Malhar looking upward in studio light' },
+  { src: '/images/gallery/studio-07.jpg', alt: 'Profile portrait of Malhar' },
+  { src: '/images/gallery/studio-08.jpg', alt: 'Malhar in the studio' },
+  { src: '/images/gallery/studio-09.jpg', alt: 'Malhar rolling up a sleeve, studio portrait' },
+  { src: '/images/gallery/studio-10.jpg', alt: 'Malhar looking down, studio portrait' },
+  { src: '/images/gallery/studio-11.jpg', alt: 'Malhar in warm studio light' },
 ]
 
 export type Destination = { name: string; country: string; lat: number; lng: number; home?: boolean }
