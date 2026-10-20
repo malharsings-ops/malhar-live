@@ -6,6 +6,7 @@ import Reveal from './Reveal'
 import { destinations } from '@/lib/site'
 
 /** Rotation (phi) that brings a longitude to the front of the globe. */
+const dpr = () => Math.min(window.devicePixelRatio || 1, 2)
 const phiFor = (lng: number) => (-lng * Math.PI) / 180 - Math.PI / 2
 
 export default function Globe() {
@@ -26,21 +27,22 @@ export default function Globe() {
     const start = () => {
       if (globe) return
       globe = createGlobe(el, {
-        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-        width: width * 2,
-        height: width * 2,
+        devicePixelRatio: dpr(),
+        width: width * dpr(),
+        height: width * dpr(),
         phi: phi.current,
         theta: 0.32,
-        dark: 1,
-        diffuse: 1.3,
-        mapSamples: 16000,
-        mapBrightness: 6,
-        baseColor: [0.1, 0.2, 0.16],
+        dark: 0.85,
+        diffuse: 1.6,
+        mapSamples: 22000,
+        mapBrightness: 5,
+        mapBaseBrightness: 0.04,
+        baseColor: [0.16, 0.3, 0.24],
         markerColor: [0.75, 0.51, 0.33],
         glowColor: [0.2, 0.36, 0.28],
         markers: destinations.map((d) => ({
           location: [d.lat, d.lng] as [number, number],
-          size: d.home ? 0.09 : 0.05,
+          size: d.home ? 0.06 : 0.035,
         })),
         onRender: (state) => {
           if (!dragging.current) {
@@ -48,8 +50,8 @@ export default function Globe() {
             phi.current += reduced ? diff : diff * 0.06
           }
           state.phi = phi.current
-          state.width = width * 2
-          state.height = width * 2
+          state.width = width * dpr()
+          state.height = width * dpr()
         },
       })
     }
@@ -83,54 +85,56 @@ export default function Globe() {
 
   return (
     <section id="journey" className="section bg-deep">
-      <div className="container center">
+      <div className="container">
         <Reveal>
           <p className="eyebrow">Our performance journey</p>
           <h2 className="h2">Music beyond boundaries.</h2>
-          <p className="lead">
-            2250+ live shows from Pune to Kuwait and Ghana. Select a city to explore, or drag the globe to turn it.
+          <p className="lead" style={{ marginLeft: 0 }}>
+            2250+ live shows from Pune to Kuwait and Ghana. Select a city to see its place on the globe, or drag the
+            globe to turn it.
           </p>
         </Reveal>
 
-        <div className="globe-wrap">
-          <canvas
-            ref={canvas}
-            aria-label={`Interactive globe showing ${d.name}`}
-            role="img"
-            onPointerDown={(e) => {
-              dragging.current = { x: e.clientX, phi: phi.current }
-              e.currentTarget.setPointerCapture(e.pointerId)
-            }}
-            onPointerMove={(e) => {
-              if (!dragging.current) return
-              const dx = e.clientX - dragging.current.x
-              phi.current = dragging.current.phi + dx / 160
-              target.current = phi.current
-            }}
-            onPointerUp={() => {
-              dragging.current = null
-            }}
-          />
-        </div>
-
-        <div className="dest" style={{ textAlign: 'left' }}>
-          <p className="eyebrow">Where Malhar has performed</p>
-          <h3>{d.name}</h3>
-          <p className="lead" style={{ marginTop: 8, marginLeft: 0 }}>
-            {d.home ? `Home base · ${d.country}` : `Performed live · ${d.country}`}
-          </p>
-          <div className="dest-chips" role="group" aria-label="Destinations">
-            {destinations.map((x, i) => (
-              <button key={x.name} className={`chip ${i === selected ? 'on' : ''}`} onClick={() => choose(i)}>
-                {x.name}
-                <br />
-                <span style={{ fontSize: 11, opacity: 0.7 }}>{x.country}</span>
-              </button>
-            ))}
+        <div className="globe-layout">
+          <div className="globe-wrap">
+            <canvas
+              ref={canvas}
+              aria-label="Interactive globe of Malhar's performance cities"
+              onPointerDown={(e) => {
+                dragging.current = { x: e.clientX, phi: phi.current }
+                e.currentTarget.setPointerCapture(e.pointerId)
+              }}
+              onPointerMove={(e) => {
+                if (!dragging.current) return
+                const dx = e.clientX - dragging.current.x
+                phi.current = dragging.current.phi + dx / 160
+                target.current = phi.current
+              }}
+              onPointerUp={() => {
+                dragging.current = null
+              }}
+            />
           </div>
-          <p className="fineprint" style={{ marginTop: 22 }}>
-            2250+ shows across India, Kuwait and West Africa, including many of Pune’s best venues. Planning an event elsewhere? Just ask.
-          </p>
+
+          <div className="dest">
+            <p className="eyebrow">Performance destinations</p>
+            <h3>{d.name}</h3>
+            <p className="dest-sub">
+              {d.home ? `Home base · ${d.country}` : `Performed live · ${d.country}`}
+            </p>
+            <div className="dest-grid" role="group" aria-label="Destinations">
+              {destinations.map((x, i) => (
+                <button key={x.name} className={`dest-card ${i === selected ? 'on' : ''}`} onClick={() => choose(i)}>
+                  <b>{x.name}</b>
+                  <span>{x.country}</span>
+                </button>
+              ))}
+            </div>
+            <p className="fineprint">
+              2250+ shows across India, Kuwait and West Africa, including many of Pune’s best venues. Planning an event
+              elsewhere? Just ask.
+            </p>
+          </div>
         </div>
       </div>
     </section>

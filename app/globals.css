@@ -1148,7 +1148,7 @@ a {
   height: 100%;
   cursor: grab;
   touch-action: pan-y;
-  contain: layout paint size;
+  display: block;
 }
 .dest {
   max-width: 900px;
@@ -2361,3 +2361,22 @@ body:has(.pick-bar) footer {
 @media (max-width: 700px) { .nav-star { padding: 6px 10px; } .nav-pill { gap: 2px; padding: 6px; } }
 html, body { overflow-x: clip; }
 .flow { overflow: hidden; }
+
+/* Globe (Divine-style two column) */
+.globe-layout { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; margin-top: 24px; }
+@media (min-width: 900px) { .globe-layout { grid-template-columns: 1.05fr 1fr; gap: 56px; } }
+.globe-layout .globe-wrap { width: min(520px, 100%); margin: 0 auto; }
+.globe-wrap::before { inset: 4%; box-shadow: 0 0 90px rgba(191, 129, 85, 0.28), inset 0 0 40px rgba(0,0,0,.4); }
+.globe-layout .dest { max-width: none; margin: 0; text-align: left; }
+.dest-sub { color: var(--muted); margin: 8px 0 0; }
+.dest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; }
+.dest-card {
+  text-align: left; padding: 16px 18px; border-radius: 10px; cursor: pointer;
+  background: rgba(52, 76, 66, 0.45); border: 1px solid var(--line-soft); color: var(--cream);
+  font-family: var(--sans); display: flex; flex-direction: column; gap: 4px; transition: border-color .2s, background .2s;
+}
+.dest-card b { font-weight: 600; font-size: 15px; }
+.dest-card span { font-size: 12px; color: var(--muted); }
+.dest-card:hover { border-color: var(--gold); }
+.dest-card.on { border-color: var(--gold); background: rgba(191, 129, 85, 0.18); }
+.globe-layout .fineprint { margin-top: 22px; }
