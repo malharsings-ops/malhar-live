@@ -2582,3 +2582,61 @@ html, body { overflow-x: clip; }
 .flow img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
 /* While a finger is down the cards track it, so no easing fighting the drag. */
 .flow.is-dragging .flow-item { transition: none; }
+
+/* ---------- Song cards: fit the Spotify player, no dead space ---------- */
+/* Wider and shorter than the photo cards: the embed needs room or its text clips. */
+#music .flow,
+#listen .flow {
+  /* Just the player plus its footer — no empty space left over. */
+  height: clamp(216px, 30vw, 244px);
+}
+#music .flow-item,
+#listen .flow-item {
+  width: min(78%, 420px);
+}
+.release .spot {
+  position: relative;
+  flex: none;
+  height: 152px;
+  overflow: hidden;
+  /* Anything too wide for the card dissolves at the edge instead of being chopped. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 10px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 10px), transparent 100%);
+}
+.release .spot iframe {
+  width: 100%;
+  height: 152px;
+}
+.release-foot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(8, 16, 13, 0.92);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+}
+.release-foot span { color: var(--gold); }
+.release-foot:hover { background: rgba(191, 129, 85, 0.16); color: #fff; }
+@media (max-width: 420px) {
+  #music .flow-item,
+  #listen .flow-item { width: min(86%, 420px); }
+}
+.release .spot { isolation: isolate; }
+.spot-guard {
+  position: absolute; inset: 0; z-index: 2; cursor: pointer;
+  display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 8px 8px;
+  background: transparent; border: 0;
+}
+.spot-guard span {
+  font-family: var(--sans); font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cream); background: rgba(8, 16, 13, 0.78); padding: 4px 9px; border-radius: 999px;
+  opacity: 0.9; transition: opacity 0.2s;
+}
+.spot-guard:hover span { opacity: 1; }
