@@ -1,19 +1,29 @@
 import Hero from '@/components/Hero'
-import FeaturedMusic from '@/components/FeaturedMusic'
-import ServiceSelector from '@/components/ServiceSelector'
+import About from '@/components/About'
+import Moments from '@/components/Moments'
 import Gallery from '@/components/Gallery'
-import Testimonials from '@/components/Testimonials'
-import CTA from '@/components/CTA'
+import Releases from '@/components/Releases'
+import Diary from '@/components/Diary'
+import Calendar from '@/components/Calendar'
+import Artist from '@/components/Artist'
+import Globe from '@/components/Globe'
+import Journal from '@/components/Journal'
+import Contact from '@/components/Contact'
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Hero />
-      <FeaturedMusic />
-      <ServiceSelector />
+      <About />
+      <Moments />
       <Gallery />
-      <Testimonials />
-      <CTA />
-    </div>
+      <Releases />
+      <Diary />
+      <Calendar />
+      <Artist />
+      <Globe />
+      <Journal />
+      <Contact />
+    </>
   )
 }

@@ -1,52 +1,87 @@
-'use client'
+import Sparkles from './Sparkles'
+import { site, tracks } from '@/lib/site'
 
-import Link from 'next/link'
+const BARS = Array.from({ length: 28 }, (_, i) => ({
+  h: 14 + ((i * 37) % 30),
+  d: ((i * 53) % 100) / 100,
+}))
 
 export default function Hero() {
   return (
-    <section className="hero-gradient text-white py-32 md:py-40">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center">
-        <div className="animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white font-serif">
-            Malhar Live
+    <section id="home" className="hero">
+      <Sparkles count={28} />
+      <header className="hero-top">
+        <a href="/#home" className="wordmark">
+          MALHAR LIVE
+          <small>by {site.artist}</small>
+        </a>
+        <div className="hero-pills" aria-label="Performance formats">
+          <a href="/#moments">
+            <b>Solo</b> — Voice &amp; Guitar
+          </a>
+          <a href="/#moments">
+            <b>Duo</b> — Harmonies
+          </a>
+          <a href="/#moments">
+            <b>Trio</b> — Full Band
+          </a>
+        </div>
+        <span style={{ width: 110 }} className="hide-sm" aria-hidden="true" />
+      </header>
+
+      <div className="container hero-grid">
+        <div>
+          <p className="eyebrow">An acoustic live act</p>
+          <h1 className="h1">
+            MALHAR
+            <br />
+            LIVE
           </h1>
-          <p className="text-xl md:text-2xl mb-4 text-gray-100 font-light">
-            Acoustic Music. Live Performance. Timeless Connection.
+          <p className="hero-by">by {site.artist}</p>
+          <p className="hero-tag">Soulful originals, played live.</p>
+          <p className="hero-copy">
+            Heartfelt original songs, performed with voice and acoustic guitar for weddings, private celebrations and
+            intimate venues.
           </p>
-          <p className="text-lg md:text-xl mb-12 text-gray-200 max-w-2xl mx-auto">
-            Premium acoustic performances for weddings, corporate events, intimate venues, and exclusive celebrations.
-          </p>
+          <a href="/#contact" className="btn btn-gold">
+            Contact Management <span aria-hidden="true">↗</span>
+          </a>
+        </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://live.malharLive.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary text-center"
-            >
-              Book a Performance
-            </a>
-            <Link href="/gallery" className="btn-secondary text-center">
-              View Gallery
-            </Link>
-          </div>
-
-          <div className="mt-16 grid grid-cols-3 gap-8 text-center">
-            <div>
-              <p className="text-4xl font-bold text-[#C9B892]">50+</p>
-              <p className="text-gray-200 mt-2">Performances</p>
+        <div className="hero-art">
+          {site.heroImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="hero-photo" src={site.heroImage} alt={`${site.artist} performing live`} />
+          ) : (
+            <div className="arch" role="img" aria-label="Malhar Live artwork">
+              <span className="arch-m">M</span>
+              <span className="arch-sub">Acoustic · Live</span>
+              <div className="eq" aria-hidden="true">
+                {BARS.map((b, i) => (
+                  <i
+                    key={i}
+                    style={{ ['--h' as string]: `${b.h}px`, animationDelay: `${b.d}s` } as React.CSSProperties}
+                  />
+                ))}
+              </div>
             </div>
-            <div>
-              <p className="text-4xl font-bold text-[#C9B892]">15+</p>
-              <p className="text-gray-200 mt-2">Cities</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-[#C9B892]">100%</p>
-              <p className="text-gray-200 mt-2">Satisfied</p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
+
+      {tracks[0] && (
+        <div className="container hero-player">
+          <div className="player-shell">
+            <iframe
+              title="Malhar Live on Spotify"
+              src={`https://open.spotify.com/embed/track/${tracks[0].id}?utm_source=generator&theme=0`}
+              height="152"
+              loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }

@@ -2,33 +2,17 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.cloudinary.com',
-      },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
     ],
   },
-  headers: async () => {
+  async redirects() {
     return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-        ],
-      },
-    ];
+      { source: '/about', destination: '/#about', permanent: false },
+      { source: '/music', destination: '/#music', permanent: false },
+      { source: '/gallery', destination: '/#gallery', permanent: false },
+    ]
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

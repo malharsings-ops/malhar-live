@@ -1,47 +1,54 @@
 'use client'
 
+import { useState } from 'react'
+import Reveal from './Reveal'
+import Coverflow from './Coverflow'
+import { gallery } from '@/lib/site'
+
 export default function Gallery() {
-  const photos = Array.from({ length: 6 }, (_, i) => ({
-    id: i + 1,
-    title: `Performance ${i + 1}`,
-    category: i % 3 === 0 ? 'Wedding' : i % 3 === 1 ? 'Corporate' : 'Intimate',
-  }))
+  const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section className="section-padding bg-gray-50">
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#5A1B2C] mb-4 font-serif">
-            Performance Gallery
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Glimpses from memorable performances across cities
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          {photos.map((photo) => (
-            <div
-              key={photo.id}
-              className="aspect-square bg-gradient-to-br from-[#C9B892] to-[#5A1B2C] rounded-lg overflow-hidden group cursor-pointer card-hover flex items-center justify-center border-4 border-[#C9B892]"
-            >
-              <div className="text-center text-white">
-                <p className="text-6xl mb-4">🎵</p>
-                <h3 className="text-xl font-semibold font-serif">{photo.title}</h3>
-                <p className="text-sm mt-2 opacity-90">{photo.category}</p>
+    <section id="gallery" className="section bg-deep">
+      <div className="container center">
+        <Reveal>
+          <p className="eyebrow">Malhar Live · The Gallery</p>
+          <h2 className="h2">Moments that stay with you.</h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <Coverflow
+            items={gallery}
+            label="Photo gallery"
+            onCenter={(i) => gallery[i].src && setOpen(i)}
+            render={(p, i) => (
+              <div className="photo">
+                {p.src ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={p.src} alt={p.alt} loading="lazy" />
+                ) : (
+                  <>
+                    <span className="ph-m">M</span>
+                    <span className="ph-t">Photo {String(i + 1).padStart(2, '0')}</span>
+                  </>
+                )}
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-6">
-            40+ high-resolution performance photos coming soon.
-            <br />
-            Contact for custom photo galleries.
-          </p>
-        </div>
+            )}
+          />
+          <p className="hint">Click a side photo to bring it forward, click the centre to enlarge.</p>
+        </Reveal>
       </div>
+
+      {open !== null && gallery[open]?.src && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo" onClick={() => setOpen(null)}>
+          <button className="lightbox-close" aria-label="Close photo" onClick={() => setOpen(null)}>
+            ✕
+          </button>
+          <div className="frame" onClick={(e) => e.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={gallery[open].src} alt={gallery[open].alt} />
+          </div>
+        </div>
+      )}
     </section>
   )
 }
