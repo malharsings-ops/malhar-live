@@ -9,7 +9,43 @@ import { destinations } from '@/lib/site'
 const dpr = () => Math.min(window.devicePixelRatio || 1, 2)
 const phiFor = (lng: number) => (-lng * Math.PI) / 180 - Math.PI / 2
 
+type V3 = [number, number, number]
+const vec = (lat: number, lng: number): V3 => {
+  const la = (lat * Math.PI) / 180
+  const lo = (lng * Math.PI) / 180
+  return [Math.cos(la) * Math.cos(lo), Math.sin(la), -Math.cos(la) * Math.sin(lo)]
+}
+const THETA = 0.32
+/** Rotate a point on the sphere the same way the globe is rotated; returns screen-space x, y and depth z. */
+const project = (v: V3, phi: number): V3 => {
+  const x1 = v[0] * Math.cos(phi) + v[2] * Math.sin(phi)
+  const z1 = -v[0] * Math.sin(phi) + v[2] * Math.cos(phi)
+  const y2 = v[1] * Math.cos(THETA) - z1 * Math.sin(THETA)
+  const z2 = v[1] * Math.sin(THETA) + z1 * Math.cos(THETA)
+  return [x1, y2, z2]
+}
+const GLOBE_R = 0.4 // globe radius as a fraction of the canvas width
+
+/** Points along a lifted great-circle arc between two places. */
+const arcPoints = (a: V3, b: V3, n = 48): V3[] => {
+  const dot = Math.min(1, Math.max(-1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2]))
+  const ang = Math.acos(dot)
+  const sn = Math.sin(ang) || 1
+  const lift = 0.1 + 0.4 * (ang / Math.PI)
+  const out: V3[] = []
+  for (let i = 0; i <= n; i++) {
+    const t = i / n
+    const k1 = Math.sin((1 - t) * ang) / sn
+    const k2 = Math.sin(t * ang) / sn
+    const r = 1 + lift * Math.sin(Math.PI * t)
+    out.push([(a[0] * k1 + b[0] * k2) * r, (a[1] * k1 + b[1] * k2) * r, (a[2] * k1 + b[2] * k2) * r])
+  }
+  return out
+}
+
 export default function Globe() {
+  const overlay = useRef<HTMLCanvasElement>(null)
+  const selRef = useRef(0)
   const canvas = useRef<HTMLCanvasElement>(null)
   const [selected, setSelected] = useState(0)
   const target = useRef(phiFor(destinations[0].lng))
@@ -23,6 +59,57 @@ export default function Globe() {
     let width = el.offsetWidth
     let globe: ReturnType<typeof createGlobe> | null = null
 
+    const home = vec(destinations[0].lat, destinations[0].lng)
+    const arcs = destinations.slice(1).map((d) => ({ pts: arcPoints(home, vec(d.lat, d.lng)) }))
+    const ov = overlay.current
+    const drawArcs = (ph: number) => {
+      if (!ov) return
+      const ratio = dpr()
+      const size = Math.round(width * ratio)
+      if (ov.width !== size) {
+        ov.width = size
+        ov.height = size
+      }
+      const g = ov.getContext('2d')
+      if (!g) return
+      g.clearRect(0, 0, size, size)
+      const c = size / 2
+      const R = size * GLOBE_R
+      const time = performance.now() / 1000
+      arcs.forEach((arc, i) => {
+        const on = selRef.current === i + 1
+        let prev: [number, number] | null = null
+        arc.pts.forEach((pt, j) => {
+          const [x, y, z] = project(pt, ph)
+          const sx = c + x * R
+          const sy = c - y * R
+          if (z > 0.02 && prev) {
+            g.strokeStyle = `rgba(217,150,100,${on ? 0.95 : 0.55})`
+            g.lineWidth = (on ? 2.2 : 1.4) * ratio
+            g.beginPath()
+            g.moveTo(prev[0], prev[1])
+            g.lineTo(sx, sy)
+            g.stroke()
+          }
+          prev = z > 0.02 ? [sx, sy] : null
+          void j
+        })
+        // travelling dot
+        const t = (time * 0.18 + i * 0.17) % 1
+        const pt = arc.pts[Math.floor(t * (arc.pts.length - 1))]
+        const [x, y, z] = project(pt, ph)
+        if (z > 0.02) {
+          g.fillStyle = '#ffd9b8'
+          g.shadowColor = '#d9966a'
+          g.shadowBlur = 10 * ratio
+          g.beginPath()
+          g.arc(c + x * R, c - y * R, 2.4 * ratio, 0, Math.PI * 2)
+          g.fill()
+          g.shadowBlur = 0
+        }
+      })
+    }
+
     // Only render while the globe is on screen, to save battery and CPU.
     const start = () => {
       if (globe) return
@@ -31,7 +118,7 @@ export default function Globe() {
         width: width * dpr(),
         height: width * dpr(),
         phi: phi.current,
-        theta: 0.32,
+        theta: THETA,
         dark: 0.85,
         diffuse: 1.6,
         mapSamples: 22000,
@@ -50,6 +137,7 @@ export default function Globe() {
             phi.current += reduced ? diff : diff * 0.06
           }
           state.phi = phi.current
+          drawArcs(phi.current)
           state.width = width * dpr()
           state.height = width * dpr()
         },
@@ -78,6 +166,7 @@ export default function Globe() {
 
   const choose = (i: number) => {
     setSelected(i)
+    selRef.current = i
     target.current = phiFor(destinations[i].lng)
   }
 
@@ -114,6 +203,7 @@ export default function Globe() {
                 dragging.current = null
               }}
             />
+            <canvas ref={overlay} className="globe-arcs" aria-hidden="true" />
           </div>
 
           <div className="dest">
