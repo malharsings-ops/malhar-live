@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Reveal from './Reveal'
-import { bookings, site } from '@/lib/site'
+import { bookings, liveShows, sampleShows, site, type Show } from '@/lib/site'
 import { enquire } from '@/lib/enquire'
 
 const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -26,7 +26,22 @@ function Lock() {
   )
 }
 
-export default function Calendar() {
+type Props = {
+  id?: string
+  eyebrow?: string
+  title?: string
+  lead?: string
+  /** Show the "catch us live" markers and the upcoming-shows grid. */
+  showLive?: boolean
+}
+
+export default function Calendar({
+  id = 'calendar',
+  eyebrow = 'Malhar Live · Availability',
+  title = 'Find your date.',
+  lead = 'Explore the performance calendar and discover which dates are open for your celebration.',
+  showLive = false,
+}: Props = {}) {
   const [today, setToday] = useState<Date | null>(null)
   const [view, setView] = useState<{ y: number; m: number } | null>(null)
   const [filter, setFilter] = useState<'all' | 'weekends'>('all')
@@ -39,6 +54,12 @@ export default function Calendar() {
   }, [])
 
   const booked = useMemo(() => new Set(bookings.map((b) => b.date)), [])
+  const shows: Show[] = useMemo(() => {
+    if (!showLive || !today) return []
+    return liveShows.length ? liveShows : sampleShows(today)
+  }, [showLive, today])
+  const sample = showLive && !liveShows.length
+  const showByDate = useMemo(() => new Map(shows.map((x) => [x.date, x])), [shows])
 
   const cells = useMemo(() => {
     if (!view) return []
@@ -49,7 +70,7 @@ export default function Calendar() {
 
   if (!today || !view) {
     return (
-      <section id="calendar" className="section bg-ink">
+      <section id={id} className="section bg-ink">
         <div className="container">
           <div className="cal-card cal-skeleton" aria-busy="true" />
         </div>
@@ -74,16 +95,15 @@ export default function Calendar() {
     : null
   const selLabel = selDate?.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
   const selBooked = selected ? booked.has(selected) : false
+  const selShow = selected ? showByDate.get(selected) : undefined
 
   return (
-    <section id="calendar" className="section bg-ink">
+    <section id={id} className="section bg-ink">
       <div className="container">
         <Reveal className="center">
-          <p className="eyebrow">Malhar Live · Availability</p>
-          <h2 className="h2">Find your date.</h2>
-          <p className="lead">
-            Explore the performance calendar and discover which dates are open for your celebration.
-          </p>
+          <p className="eyebrow">{eyebrow}</p>
+          <h2 className="h2">{title}</h2>
+          <p className="lead">{lead}</p>
         </Reveal>
 
         <Reveal delay={80}>
@@ -117,6 +137,12 @@ export default function Calendar() {
                 <i style={{ background: '#e0708a' }} />
                 Booked
               </span>
+              {showLive && (
+                <span>
+                  <i style={{ background: '#e8bc70' }} />
+                  Catch us live
+                </span>
+              )}
               <span>
                 <i style={{ border: '2px solid #e8bc70' }} />
                 Popular weekend
@@ -139,6 +165,7 @@ export default function Calendar() {
                 const dow = new Date(view.y, view.m, d).getDay()
                 const weekend = dow === 0 || dow === 6
                 const isBooked = booked.has(k)
+                const live = showByDate.has(k)
                 const past = k < todayKey
                 const dim = filter === 'weekends' && !weekend
                 return (
@@ -148,6 +175,7 @@ export default function Calendar() {
                       'day',
                       weekend ? 'weekend' : '',
                       isBooked ? 'booked' : '',
+                      live ? 'live' : '',
                       past ? 'past' : '',
                       dim ? 'dim' : '',
                       k === todayKey ? 'today' : '',
@@ -155,7 +183,7 @@ export default function Calendar() {
                     ].join(' ')}
                     disabled={past}
                     aria-pressed={k === selected}
-                    aria-label={`${d} ${monthLabel}${isBooked ? ', booked' : weekend ? ', weekend' : ''}`}
+                    aria-label={`${d} ${monthLabel}${isBooked ? ', booked' : live ? ', live show' : weekend ? ', weekend' : ''}`}
                     onClick={() => setSelected(k)}
                   >
                     {d}
@@ -176,9 +204,14 @@ export default function Calendar() {
               <>
                 <p className="eyebrow">Your celebration begins here</p>
                 <span className={`status ${selBooked ? 'full' : 'open'}`}>
-                  {selBooked ? 'Already booked' : 'Open for enquiries'}
+                  {selBooked ? 'Already booked' : selShow ? 'Catch us live' : 'Open for enquiries'}
                 </span>
                 <h3 className="h3">{selLabel}</h3>
+                {selShow && (
+                  <p className="lead" style={{ marginTop: 14 }}>
+                    Malhar is playing at {selShow.venue}, {selShow.city}. Come and hear the songs live.
+                  </p>
+                )}
                 <p className="lead" style={{ marginTop: 14 }}>
                   {selBooked
                     ? 'This date is taken. Pick another date, or write to ask about other formats and nearby days.'
@@ -209,6 +242,42 @@ export default function Calendar() {
             )}
           </div>
         </Reveal>
+
+        {showLive && shows.length > 0 && (
+          <Reveal delay={140}>
+            <div className="show-head">
+              <p className="eyebrow">Upcoming live shows</p>
+              {sample && <span className="sample-tag">Sample listing · real dates coming soon</span>}
+            </div>
+            <div className="show-grid">
+              {shows.map((x) => {
+                const d = new Date(`${x.date}T00:00:00`)
+                return (
+                  <button
+                    key={x.date}
+                    className="show-card"
+                    onClick={() => {
+                      const [y, m] = x.date.split('-').map(Number)
+                      setView({ y, m: m - 1 })
+                      setSelected(x.date)
+                    }}
+                  >
+                    <span className="show-date">
+                      <b>{d.getDate()}</b>
+                      {d.toLocaleDateString('en-IN', { month: 'short' })}
+                    </span>
+                    <span className="show-info">
+                      <b>{x.venue}</b>
+                      <small>
+                        {x.city} · {d.toLocaleDateString('en-IN', { weekday: 'long' })}
+                      </small>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   )

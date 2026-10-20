@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { tracks } from '@/lib/site'
 
 export default function MiniPlayer() {
   const [hidden, setHidden] = useState(true)
+  const path = usePathname()
 
   useEffect(() => {
     try {
@@ -14,7 +16,7 @@ export default function MiniPlayer() {
     }
   }, [])
 
-  if (hidden || !tracks.length) return null
+  if (hidden || !tracks.length || path === '/book') return null
 
   return (
     <aside className="mini" aria-label="Listen on Spotify">

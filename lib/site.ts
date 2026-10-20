@@ -27,65 +27,140 @@ export const tracks: Track[] = [
 
 export type Video = { title: string; youtubeId?: string }
 
+export type FormatId = 'solo' | 'duo' | 'trio' | 'band'
+
 export type Format = {
-  id: 'solo' | 'duo' | 'trio'
+  id: FormatId
   number: string
   name: string
+  /** Short label for the selector tile. */
+  who: string
   headline: string
   line: string
   tagline: string
   hours: string
-  price: string
+  lineup: string[]
+  /** True for the bespoke option: shown as "enquire" rather than a fixed format. */
+  custom?: boolean
   videos: Video[]
+  testimonials: Video[]
 }
 
+/** Replace `youtubeId` with the id from a YouTube link (youtube.com/watch?v=THIS_PART). No pricing is shown anywhere. */
 export const formats: Format[] = [
   {
     id: 'solo',
     number: '01',
     name: 'Solo',
+    who: 'Singer cum guitarist',
     headline: 'Just a voice and a guitar.',
-    line: 'Voice + acoustic guitar',
-    tagline: 'An intimate, unplugged evening with a light setup and no tech crew.',
+    line: 'Singer cum guitarist',
+    tagline: 'An intimate, unplugged evening with a light setup. Malhar sings and plays, and the room does the rest.',
     hours: '2–3 hours',
-    price: 'From ₹15,000',
+    lineup: ['Vocals', 'Acoustic guitar'],
     videos: [
       { title: 'Solo — Live Performance 1' },
       { title: 'Solo — Live Performance 2' },
       { title: 'Solo — Live Performance 3' },
+    ],
+    testimonials: [
+      { title: 'Client story 1 · Solo' },
+      { title: 'Client story 2 · Solo' },
+      { title: 'Client story 3 · Solo' },
     ],
   },
   {
     id: 'duo',
     number: '02',
     name: 'Duo',
-    headline: 'Two voices, a fuller sound.',
-    line: 'Singer + musician',
-    tagline: 'Harmonies and a richer arrangement for longer, livelier evenings.',
+    who: 'Singer, guitarist & keyboard',
+    headline: 'Two musicians, a fuller sound.',
+    line: 'Singer-guitarist with keyboard',
+    tagline: 'Keys add warmth and depth under the vocals, for longer, livelier evenings.',
     hours: '3–4 hours',
-    price: '₹25,000 – ₹35,000',
+    lineup: ['Vocals', 'Acoustic guitar', 'Keyboard'],
     videos: [
       { title: 'Duo — Live Performance 1' },
       { title: 'Duo — Live Performance 2' },
       { title: 'Duo — Live Performance 3' },
+    ],
+    testimonials: [
+      { title: 'Client story 1 · Duo' },
+      { title: 'Client story 2 · Duo' },
+      { title: 'Client story 3 · Duo' },
     ],
   },
   {
     id: 'trio',
     number: '03',
     name: 'Trio',
-    headline: 'The full band experience.',
-    line: 'Drums, bass & harmony',
-    tagline: 'A complete live band sound for stages, celebrations and big nights.',
+    who: 'Adds drums',
+    headline: 'The band experience.',
+    line: 'Singer-guitarist, keyboard and drums',
+    tagline: 'Drums bring the energy up. A complete live sound for stages, celebrations and big nights.',
     hours: '4–5 hours',
-    price: 'Custom quote',
+    lineup: ['Vocals', 'Acoustic guitar', 'Keyboard', 'Drums'],
     videos: [
       { title: 'Trio — Live Performance 1' },
       { title: 'Trio — Live Performance 2' },
       { title: 'Trio — Live Performance 3' },
     ],
+    testimonials: [
+      { title: 'Client story 1 · Trio' },
+      { title: 'Client story 2 · Trio' },
+      { title: 'Client story 3 · Trio' },
+    ],
+  },
+  {
+    id: 'band',
+    number: '04',
+    name: 'Bigger Band',
+    who: 'Enquire for a bigger band',
+    headline: 'Something bigger? Let us build it.',
+    line: 'Custom lineup',
+    tagline: 'Festivals, weddings and large stages. Tell us the occasion and we will shape a lineup around it.',
+    hours: 'Planned with you',
+    lineup: ['Custom lineup', 'Added instruments', 'Sound planning'],
+    custom: true,
+    videos: [
+      { title: 'Full band — Live Performance 1' },
+      { title: 'Full band — Live Performance 2' },
+      { title: 'Full band — Live Performance 3' },
+    ],
+    testimonials: [
+      { title: 'Client story 1 · Band' },
+      { title: 'Client story 2 · Band' },
+      { title: 'Client story 3 · Band' },
+    ],
   },
 ]
+
+export type Show = { date: string; venue: string; city: string }
+
+const SAMPLE_VENUES: [string, string][] = [
+  ['The Acoustic Room (sample)', 'Pune'],
+  ['Lakeside Terrace (sample)', 'Lonavala'],
+  ['Sunset Deck (sample)', 'Mumbai'],
+  ['The Garden Courtyard (sample)', 'Pune'],
+  ['Hilltop Lounge (sample)', 'Mahabaleshwar'],
+  ['Heritage Haveli (sample)', 'Udaipur'],
+]
+
+/**
+ * Placeholder "catch us live" dates: the next six Saturdays with sample venues.
+ * Replace with real dates by filling `liveShows` below; while it is empty these samples appear.
+ */
+export const liveShows: Show[] = []
+
+export function sampleShows(from: Date): Show[] {
+  const d = new Date(from.getFullYear(), from.getMonth(), from.getDate())
+  d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7 || 7))
+  return SAMPLE_VENUES.map(([venue, city], i) => {
+    const x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + i * 7)
+    const date = `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`
+    return { date, venue, city }
+  })
+}
 
 export type Photo = { src?: string; alt: string }
 

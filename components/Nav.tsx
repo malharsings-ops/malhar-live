@@ -67,7 +67,7 @@ export default function Nav() {
         <a href="/#journal" className={`${cls('journal')} hide-sm`}>
           Journal
         </a>
-        <a href="/#contact" className="nav-cta">
+        <a href="/book" className="nav-cta">
           Book Now
         </a>
       </nav>

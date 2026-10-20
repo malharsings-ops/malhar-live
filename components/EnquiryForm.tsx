@@ -5,7 +5,7 @@ import { site } from '@/lib/site'
 import type { EnquiryDetail } from '@/lib/enquire'
 
 const EVENTS = ['Wedding', 'Sangeet / Reception', 'Private celebration', 'Corporate event', 'Venue / Restaurant', 'Other']
-const FORMATS = ['Not sure yet', 'Solo', 'Duo', 'Trio']
+const FORMATS = ['Not sure yet', 'Solo', 'Duo', 'Trio', 'Bigger Band']
 
 export default function EnquiryForm() {
   const [date, setDate] = useState('')
