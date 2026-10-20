@@ -13,7 +13,10 @@ export const site = {
   /** Add a number like '919876543210' to show a WhatsApp button. */
   whatsapp: '',
   /** Add a path like '/images/malhar-hero.jpg' (file in /public) to replace the hero artwork. */
+  /** Portrait crop (used in the Meet Malhar section). */
   heroImage: '/images/malhar-hero.jpg',
+  /** Wide full-bleed hero photo. */
+  heroWide: '/images/malhar-hero-wide.jpg',
   spotifyArtist: '',
 }
 

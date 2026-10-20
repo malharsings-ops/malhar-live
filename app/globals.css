@@ -2085,3 +2085,59 @@ body:has(.pick-bar) footer {
     display: none;
   }
 }
+
+/* Full-bleed hero photo with faded edges */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-bg img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 82%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% 50%;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(270deg, rgba(23, 43, 37, 0.6) 0%, transparent 14%),
+    linear-gradient(0deg, #172b25 0%, rgba(23, 43, 37, 0.75) 12%, transparent 40%),
+    linear-gradient(180deg, #172b25 0%, rgba(23, 43, 37, 0.6) 10%, transparent 26%),
+    linear-gradient(90deg, #172b25 0%, rgba(23, 43, 37, 0.94) 26%, rgba(23, 43, 37, 0.6) 46%, transparent 74%);
+}
+.hero-top {
+  position: relative;
+  z-index: 3;
+}
+.hero-grid.has-bg {
+  min-height: 62svh;
+}
+@media (max-width: 899px) {
+  .hero-bg {
+    height: 66svh;
+    bottom: auto;
+  }
+  .hero-bg img {
+    width: 100%;
+    object-position: 64% 20%;
+  }
+  .hero-bg::after {
+    background:
+      linear-gradient(180deg, #172b25 0%, rgba(23, 43, 37, 0.5) 12%, transparent 30%),
+      linear-gradient(0deg, #172b25 0%, rgba(23, 43, 37, 0.92) 18%, transparent 70%);
+  }
+  .hero-grid.has-bg {
+    padding-top: 40svh;
+    min-height: 0;
+  }
+}
+.hero:has(.hero-bg) {
+  background: #172b25;
+}
