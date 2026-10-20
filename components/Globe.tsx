@@ -43,6 +43,8 @@ const arcPoints = (a: V3, b: V3, n = 48): V3[] => {
   return out
 }
 
+const SPIN = 0.0016 // radians per frame of idle drift
+
 export default function Globe() {
   const overlay = useRef<HTMLCanvasElement>(null)
   const selRef = useRef(0)
@@ -50,6 +52,7 @@ export default function Globe() {
   const [selected, setSelected] = useState(0)
   const target = useRef(phiFor(destinations[0].lng))
   const dragging = useRef<{ x: number; phi: number } | null>(null)
+  const hold = useRef(0)
   const phi = useRef(phiFor(destinations[0].lng))
 
   useEffect(() => {
@@ -94,7 +97,7 @@ export default function Globe() {
           prev = z > 0.02 ? [sx, sy] : null
           void j
         })
-        // travelling dot
+        // travelling light along the arc
         const t = (time * 0.18 + i * 0.17) % 1
         const pt = arc.pts[Math.floor(t * (arc.pts.length - 1))]
         const [x, y, z] = project(pt, ph)
@@ -106,6 +109,42 @@ export default function Globe() {
           g.arc(c + x * R, c - y * R, 2.4 * ratio, 0, Math.PI * 2)
           g.fill()
           g.shadowBlur = 0
+        }
+      })
+
+      // City dots and names, so the globe reads as a map of real shows.
+      g.font = `600 ${12 * ratio}px Manrope, system-ui, sans-serif`
+      g.textBaseline = 'middle'
+      destinations.forEach((dst, i) => {
+        const [x, y, z] = project(vec(dst.lat, dst.lng), ph)
+        if (z <= 0.04) return
+        const sx = c + x * R
+        const sy = c - y * R
+        const on = selRef.current === i
+        const fade = Math.min(1, (z - 0.04) * 4)
+        // Only the chosen city and home are named, so the labels never pile up.
+        const named = on || (dst.home && selRef.current !== i)
+        if (on) {
+          const pulse = 4 + 3 * (1 + Math.sin(time * 3)) * 0.5
+          g.beginPath()
+          g.arc(sx, sy, pulse * ratio, 0, Math.PI * 2)
+          g.strokeStyle = `rgba(191,129,85,${0.5 * fade})`
+          g.lineWidth = 1.4 * ratio
+          g.stroke()
+        }
+        g.beginPath()
+        g.arc(sx, sy, (on ? 3.4 : 2.4) * ratio, 0, Math.PI * 2)
+        g.fillStyle = on ? `rgba(255,214,176,${fade})` : `rgba(217,150,100,${0.9 * fade})`
+        g.fill()
+        if (named) {
+          const label = dst.name
+          const w = g.measureText(label).width
+          g.fillStyle = `rgba(10,20,17,${0.55 * fade})`
+          g.beginPath()
+          g.roundRect(sx + 7 * ratio, sy - 9 * ratio, w + 10 * ratio, 18 * ratio, 5 * ratio)
+          g.fill()
+          g.fillStyle = on ? `rgba(255,232,210,${fade})` : `rgba(243,235,221,${0.8 * fade})`
+          g.fillText(label, sx + 12 * ratio, sy)
         }
       })
     }
@@ -133,8 +172,9 @@ export default function Globe() {
         })),
         onRender: (state) => {
           if (!dragging.current) {
+            if (performance.now() > hold.current) target.current += reduced ? 0 : SPIN
             const diff = target.current - phi.current
-            phi.current += reduced ? diff : diff * 0.06
+            phi.current += reduced ? diff : diff * 0.08
           }
           state.phi = phi.current
           drawArcs(phi.current)
@@ -167,7 +207,11 @@ export default function Globe() {
   const choose = (i: number) => {
     setSelected(i)
     selRef.current = i
-    target.current = phiFor(destinations[i].lng)
+    // Turn to the city, then hold it still for a beat before the drift resumes.
+    const want = phiFor(destinations[i].lng)
+    const turns = Math.round((phi.current - want) / (Math.PI * 2))
+    target.current = want + turns * Math.PI * 2
+    hold.current = performance.now() + 2600
   }
 
   const d = destinations[selected]
@@ -204,6 +248,7 @@ export default function Globe() {
               }}
             />
             <canvas ref={overlay} className="globe-arcs" aria-hidden="true" />
+            <p className="globe-hint">Drag to spin · tap a city</p>
           </div>
 
           <div className="dest">

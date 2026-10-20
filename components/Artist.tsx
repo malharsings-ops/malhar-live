@@ -18,12 +18,13 @@ export default function Artist() {
               of Lucky Ali, he writes and performs original songs that feel honest, warm and close.
             </p>
             <p>
-              Malhar Live is where those songs meet the room. Whether it is a quiet evening with just a voice and a
-              guitar, or a full band night, every performance is shaped around the people listening.
+              Malhar Live is where those songs meet the room. More than 2250 shows have taken him from Pune&rsquo;s
+              listening rooms to stages in Kuwait and West Africa, and the set has stayed the same at heart: his own
+              songs, sung live, with nothing hiding behind them.
             </p>
             <p>
-              For weddings, private celebrations and venues, Malhar brings an evening that guests remember, built on
-              songs he wrote himself.
+              Some nights it is a voice and a guitar. Others it is a full band. Either way the evening is built around
+              the people in front of him, not a setlist on paper.
             </p>
           </div>
         </Reveal>

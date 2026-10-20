@@ -33,14 +33,17 @@ type Props = {
   lead?: string
   /** Show the "catch us live" markers and the upcoming-shows grid. */
   showLive?: boolean
+  /** Homepage mode: just the upcoming shows, no availability grid. */
+  showsOnly?: boolean
 }
 
 export default function Calendar({
   id = 'calendar',
-  eyebrow = 'Malhar Live · Availability',
-  title = 'Find your date.',
-  lead = 'Explore the performance calendar and discover which dates are open for your celebration.',
+  eyebrow = 'Malhar Live · Dates',
+  title = 'Dates and availability.',
+  lead = 'Browse the calendar and pick a date to see where it stands.',
   showLive = false,
+  showsOnly = false,
 }: Props = {}) {
   const [today, setToday] = useState<Date | null>(null)
   const [view, setView] = useState<{ y: number; m: number } | null>(null)
@@ -55,10 +58,10 @@ export default function Calendar({
 
   const booked = useMemo(() => new Set(bookings.map((b) => b.date)), [])
   const shows: Show[] = useMemo(() => {
-    if (!showLive || !today) return []
+    if (!(showLive || showsOnly) || !today) return []
     return liveShows.length ? liveShows : sampleShows(today)
   }, [showLive, today])
-  const sample = showLive && !liveShows.length
+  const sample = (showLive || showsOnly) && !liveShows.length
   const showByDate = useMemo(() => new Map(shows.map((x) => [x.date, x])), [shows])
 
   const cells = useMemo(() => {
@@ -96,6 +99,52 @@ export default function Calendar({
   const selLabel = selDate?.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
   const selBooked = selected ? booked.has(selected) : false
   const selShow = selected ? showByDate.get(selected) : undefined
+
+  if (showsOnly) {
+    return (
+      <section id={id} className="section bg-ink">
+        <div className="container">
+          <Reveal>
+            <div className="shows-head">
+              <div>
+                <p className="eyebrow">{eyebrow}</p>
+                <h2 className="h2">{title}</h2>
+                <p className="lead" style={{ marginLeft: 0 }}>
+                  {lead}
+                </p>
+              </div>
+              <a className="btn btn-ghost" href="/book#live">
+                Full calendar <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            {sample && <p className="sample-tag">Sample listing · real dates coming soon</p>}
+            <div className="shows-list">
+              {shows.map((x) => {
+                const d = new Date(`${x.date}T00:00:00`)
+                return (
+                  <div className="show-row" key={x.date}>
+                    <span className="show-date">
+                      <b>{d.getDate()}</b>
+                      {d.toLocaleDateString('en-IN', { month: 'short' })}
+                    </span>
+                    <span className="show-info">
+                      <b>{x.venue}</b>
+                      <small>
+                        {x.city} · {d.toLocaleDateString('en-IN', { weekday: 'long' })}
+                      </small>
+                    </span>
+                    <span className="show-city">{x.city}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id={id} className="section bg-ink">
@@ -193,7 +242,7 @@ export default function Calendar({
               })}
             </div>
             <p className="cal-note">
-              Weekends are the most requested dates, so enquire early. Select any date to check its status.
+              Weekends go first, so ask early. Select any date to see where it stands.
             </p>
           </div>
           <div className="date-panel">
@@ -203,7 +252,7 @@ export default function Calendar({
             </svg>
             {selected && selLabel ? (
               <>
-                <p className="eyebrow">Your celebration begins here</p>
+                <p className="eyebrow">Date details</p>
                 <span className={`status ${selBooked ? 'full' : 'open'}`}>
                   {selBooked ? 'Already booked' : selShow ? 'Catch us live' : 'Open for enquiries'}
                 </span>
@@ -234,7 +283,7 @@ export default function Calendar({
               </>
             ) : (
               <>
-                <p className="eyebrow">Your celebration begins here</p>
+                <p className="eyebrow">Date details</p>
                 <h3 className="h3">A date worth remembering.</h3>
                 <p className="lead" style={{ marginTop: 14 }}>
                   Select any date from the calendar to check its status and enquire with Malhar Live.

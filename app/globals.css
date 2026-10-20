@@ -2385,3 +2385,98 @@ html, body { overflow-x: clip; }
 .globe-wrap canvas:not(.globe-arcs) { position: relative; z-index: 1; touch-action: pan-y; cursor: grab; }
 .globe-wrap canvas:not(.globe-arcs):active { cursor: grabbing; }
 .globe-wrap .globe-arcs { z-index: 2; }
+
+/* ---------- Hero: artist-first ---------- */
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+.hero-proof { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 30px; }
+.hero-proof span {
+  display: flex; align-items: baseline; gap: 8px; font-family: var(--sans);
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+}
+.hero-proof b { font-family: var(--serif); font-size: 30px; letter-spacing: 0; color: var(--gold); text-transform: none; }
+@media (max-width: 700px) {
+  .hero-proof { gap: 18px; margin-top: 22px; }
+  .hero-proof b { font-size: 24px; }
+  .hero-proof span { font-size: 10px; }
+}
+
+/* ---------- Docking Spotify player ---------- */
+.player-slot { height: 152px; }
+.player-shell { transition: box-shadow 0.3s; }
+.player-shell iframe { height: 152px; }
+.player-shell.docked {
+  position: fixed; right: 16px; bottom: 16px; z-index: 55;
+  width: min(380px, calc(100% - 32px));
+  padding: 10px 12px 8px;
+  background: linear-gradient(135deg, rgba(52, 76, 66, 0.97), rgba(14, 28, 23, 0.97));
+  backdrop-filter: blur(10px);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+}
+.player-shell.docked iframe { height: 80px; border-radius: 12px; }
+.player-shell.put-away { display: none; }
+.player-tag {
+  margin: 0 0 6px; font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--gold);
+}
+.player-close {
+  position: absolute; top: 6px; right: 8px; width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35); color: var(--muted); font-size: 12px; cursor: pointer; line-height: 1;
+}
+.player-close:hover { color: var(--cream); }
+
+/* ---------- Globe hint ---------- */
+.globe-hint {
+  position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%);
+  margin: 0; font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); opacity: 0.75; white-space: nowrap; pointer-events: none;
+}
+.globe-hint span { color: var(--gold); margin-right: 6px; }
+
+/* ---------- Homepage shows list ---------- */
+.shows-head { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; justify-content: space-between; }
+.shows-list { margin-top: 30px; border-top: 1px solid var(--line-soft); }
+.show-row {
+  display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 20px;
+  padding: 20px 4px; border-bottom: 1px solid var(--line-soft); transition: background 0.2s;
+}
+.show-row:hover { background: rgba(191, 129, 85, 0.06); }
+.show-row .show-city {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+}
+@media (max-width: 700px) {
+  .show-row { grid-template-columns: 52px 1fr; gap: 14px; padding: 16px 2px; }
+  .show-row .show-city { display: none; }
+}
+
+/* ---------- Booking: selector beside the videos ---------- */
+.fmt-now { margin-top: 44px; }
+.sub-lead { color: var(--muted); margin: -6px 0 22px; max-width: 620px; }
+.inclusions {
+  margin-top: 22px; padding: 18px 20px; border-radius: 14px;
+  border: 1px solid var(--line-soft); background: rgba(52, 76, 66, 0.32);
+}
+.inclusions p { margin: 0 0 10px; color: var(--cream); font-size: 14px; }
+.inclusions b { color: var(--gold); }
+.inclusions ul { margin: 0; padding-left: 18px; }
+.inclusions li { color: var(--muted); font-size: 13px; line-height: 1.75; }
+
+/* ---------- Song cards with real cover art ---------- */
+.release-art { position: relative; overflow: hidden; }
+.release-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.release-meta {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: flex; flex-direction: column; gap: 4px; padding: 16px;
+  background: linear-gradient(180deg, transparent, rgba(10, 20, 17, 0.92));
+  text-align: left;
+}
+.release-meta small { font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.release-meta b { font-family: var(--serif); font-size: 18px; color: var(--cream); line-height: 1.2; }
+@media (max-width: 900px) {
+  /* Keep the hero words readable where the photo is busiest. */
+  .hero-bg::after {
+    background:
+      linear-gradient(0deg, #172b25 0%, rgba(23, 43, 37, 0.92) 34%, rgba(23, 43, 37, 0.55) 58%, transparent 82%),
+      linear-gradient(180deg, #172b25 0%, rgba(23, 43, 37, 0.55) 12%, transparent 30%);
+  }
+  .hero-bg img { width: 100%; }
+}

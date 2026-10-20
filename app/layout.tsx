@@ -2,17 +2,16 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import MiniPlayer from '@/components/MiniPlayer'
 
-const title = 'Malhar Live by Malhar Divekar | Acoustic Singer in Pune'
+const title = 'Malhar Live | Malhar Divekar — Indie Singer-Songwriter'
 const description =
-  'Malhar Live is the acoustic live act of Pune singer Malhar Divekar. Original songs performed Solo, Duo or Trio for weddings, private celebrations and venues. Check dates and book.'
+  'Malhar Divekar is a Pune indie singer-songwriter with 2250+ live shows across India, Kuwait and West Africa. Hear the original songs, watch him live, and see where he plays next.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://malhar-live.vercel.app'),
   title,
   description,
-  keywords: ['Malhar Divekar', 'Malhar Live', 'live singer Pune', 'acoustic singer', 'wedding singer Pune', 'live band booking'],
+  keywords: ['Malhar Divekar', 'Malhar Live', 'indie singer songwriter', 'original songs', 'live singer Pune', 'acoustic artist India'],
   openGraph: { title, description, type: 'website', locale: 'en_IN', siteName: 'Malhar Live', images: [{ url: '/images/malhar-og.jpg', width: 1200, height: 629, alt: 'Malhar Divekar performing live' }] },
   twitter: { card: 'summary_large_image', title, description, images: ['/images/malhar-og.jpg'] },
 }
@@ -39,7 +38,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main>{children}</main>
         <Footer />
-        <MiniPlayer />
       </body>
     </html>
   )

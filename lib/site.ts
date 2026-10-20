@@ -32,6 +32,13 @@ export const tracks: Track[] = [
 
 export type Video = { title: string; youtubeId?: string }
 
+/** Three performance videos for the homepage. Paste YouTube ids to make them playable. */
+export const reel: Video[] = [
+  { title: 'Live in Pune — original set' },
+  { title: 'Unplugged — one take' },
+  { title: 'On stage — full band night' },
+]
+
 export type FormatId = 'solo' | 'duo' | 'trio' | 'band'
 
 export type Format = {
@@ -61,7 +68,7 @@ export const formats: Format[] = [
     headline: 'Just a voice and a guitar.',
     line: 'Singer cum guitarist',
     tagline: 'An intimate, unplugged evening with a light setup. Malhar sings and plays, and the room does the rest.',
-    hours: '2–3 hours',
+    hours: '2 hours · one 20-min break',
     lineup: ['Vocals', 'Acoustic guitar'],
     videos: [
       { title: 'Solo — Live Performance 1' },
@@ -82,7 +89,7 @@ export const formats: Format[] = [
     headline: 'Two musicians, a fuller sound.',
     line: 'Singer-guitarist with keyboard',
     tagline: 'Keys add warmth and depth under the vocals, for longer, livelier evenings.',
-    hours: '3–4 hours',
+    hours: '2 hours · one 20-min break',
     lineup: ['Vocals', 'Acoustic guitar', 'Keyboard'],
     videos: [
       { title: 'Duo — Live Performance 1' },
@@ -103,7 +110,7 @@ export const formats: Format[] = [
     headline: 'The band experience.',
     line: 'Singer-guitarist, keyboard and drums',
     tagline: 'Drums bring the energy up. A complete live sound for stages, celebrations and big nights.',
-    hours: '4–5 hours',
+    hours: '2 hours · one 20-min break',
     lineup: ['Vocals', 'Acoustic guitar', 'Keyboard', 'Drums'],
     videos: [
       { title: 'Trio — Live Performance 1' },
@@ -124,7 +131,7 @@ export const formats: Format[] = [
     headline: 'Something bigger? Let us build it.',
     line: 'Custom lineup',
     tagline: 'Festivals, weddings and large stages. Tell us the occasion and we will shape a lineup around it.',
-    hours: 'Planned with you',
+    hours: '2 hours · one 20-min break',
     lineup: ['Custom lineup', 'Added instruments', 'Sound planning'],
     custom: true,
     videos: [
@@ -139,6 +146,15 @@ export const formats: Format[] = [
     ],
   },
 ]
+
+/** Shown on the booking page under every lineup. No pricing anywhere. */
+export const inclusions = {
+  set: '2 hours of live music, including one 20-minute break.',
+  notes: [
+    'Sound, lights and stage are arranged by the host, not included in the performance.',
+    'Artist hospitality — travel, refreshments and a green room — to be provided by the host.',
+  ],
+}
 
 export type Show = { date: string; venue: string; city: string }
 

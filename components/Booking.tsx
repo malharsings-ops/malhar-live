@@ -8,13 +8,13 @@ import TrackSlider from './TrackSlider'
 import Calendar from './Calendar'
 import MalharShowcase from './MalharShowcase'
 import Contact from './Contact'
-import { formats, site, type FormatId } from '@/lib/site'
+import { formats, inclusions, site, type FormatId } from '@/lib/site'
 import { enquire } from '@/lib/enquire'
 
 const TABS = [
-  ['watch', 'Watch'],
+  ['watch', 'Choose & watch'],
+  ['stories', 'Client stories'],
   ['listen', 'Listen'],
-  ['stories', 'Stories'],
   ['live', 'Catch us live'],
   ['meet', 'Meet Malhar'],
   ['contact', 'Enquire'],
@@ -58,28 +58,10 @@ export default function Booking() {
           <p className="eyebrow">Book Malhar Live</p>
           <h1 className="h1 book-h1">Choose your evening.</h1>
           <p className="lead">
-            Pick the lineup that suits your celebration. Watch it live, hear the songs, check dates, then send an
-            enquiry. Malhar replies personally.
+Pick the lineup that suits your evening, watch it live, hear the songs and check dates. Malhar replies to
+            every enquiry personally.
           </p>
 
-          <div className="fmt-grid" role="radiogroup" aria-label="Choose a lineup">
-            {formats.map((x) => (
-              <button
-                key={x.id}
-                role="radio"
-                aria-checked={x.id === fid}
-                className={`fmt ${x.id === fid ? 'on' : ''}`}
-                onClick={() => choose(x.id)}
-              >
-                <span className="fmt-no">{x.number}</span>
-                <span className="fmt-name">{x.name}</span>
-                <span className="fmt-who">{x.who}</span>
-                <span className="fmt-tick" aria-hidden="true">
-                  {x.id === fid ? '✦' : '○'}
-                </span>
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -97,7 +79,29 @@ export default function Booking() {
         <section id="watch" className="section bg-ink">
           <div className="container">
             <Reveal>
-              <p className="eyebrow">
+              <p className="eyebrow">Step 1 — choose the lineup</p>
+              <h2 className="h2">How many on stage?</h2>
+              <div className="fmt-grid" role="radiogroup" aria-label="Choose a lineup">
+                {formats.map((x) => (
+                  <button
+                    key={x.id}
+                    role="radio"
+                    aria-checked={x.id === fid}
+                    className={`fmt ${x.id === fid ? 'on' : ''}`}
+                    onClick={() => choose(x.id)}
+                  >
+                    <span className="fmt-no">{x.number}</span>
+                    <span className="fmt-name">{x.name}</span>
+                    <span className="fmt-who">{x.who}</span>
+                    <span className="fmt-tick" aria-hidden="true">
+                      {x.id === fid ? '✦' : '○'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </Reveal>
+            <Reveal>
+              <p className="eyebrow fmt-now">
                 {f.number} — {f.name}
               </p>
               <h2 className="h2">{f.headline}</h2>
@@ -108,9 +112,20 @@ export default function Booking() {
                 ))}
                 <span className="lineup-time">{f.hours}</span>
               </div>
+              <div className="inclusions">
+                <p>
+                  <b>Every evening:</b> {inclusions.set}
+                </p>
+                <ul>
+                  {inclusions.notes.map((n) => (
+                    <li key={n}>{n}</li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
             <Reveal delay={80}>
-              <h3 className="sub-h">Watch it live</h3>
+              <h3 className="sub-h">Step 2 — watch the {f.name} live</h3>
+              <p className="sub-lead">Three performances with this exact lineup. Tap any video to play it.</p>
               <VideoGrid videos={f.videos} />
               {f.custom && (
                 <div className="band-cta">
@@ -124,11 +139,23 @@ export default function Booking() {
           </div>
         </section>
 
-        <section id="listen" className="section bg-deep">
+        <section id="stories" className="section bg-deep">
+          <div className="container">
+            <Reveal>
+              <p className="eyebrow">Step 3 — kind words · {f.name}</p>
+              <h2 className="h2">From the people who booked.</h2>
+              <p className="lead">Short video messages from clients who had {f.name === 'Bigger Band' ? 'a band' : `a ${f.name}`} evening.</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <VideoGrid videos={f.testimonials} />
+            </Reveal>
+          </div>
+        </section>
+        <section id="listen" className="section bg-ink">
           <Sparkles count={20} />
           <div className="container center" style={{ position: 'relative' }}>
             <Reveal>
-              <p className="eyebrow">Hear the songs</p>
+              <p className="eyebrow">Step 4 — hear the songs</p>
               <h2 className="h2">Original songs, played your way.</h2>
               <p className="lead">The same songs travel with every lineup. Slide through and press play.</p>
             </Reveal>
@@ -138,18 +165,6 @@ export default function Booking() {
           </div>
         </section>
 
-        <section id="stories" className="section bg-ink">
-          <div className="container">
-            <Reveal>
-              <p className="eyebrow">Kind words · {f.name}</p>
-              <h2 className="h2">From the people who booked.</h2>
-              <p className="lead">Short video messages from clients who had {f.name === 'Bigger Band' ? 'a band' : `a ${f.name}`} evening.</p>
-            </Reveal>
-            <Reveal delay={80}>
-              <VideoGrid videos={f.testimonials} />
-            </Reveal>
-          </div>
-        </section>
       </div>
 
       <Calendar

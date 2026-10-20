@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
-const SECTIONS = ['about', 'journey', 'moments', 'gallery', 'music', 'calendar', 'journal', 'contact']
-const MEDIA = ['moments', 'gallery', 'music']
+const SECTIONS = ['about', 'gallery', 'watch', 'music', 'artist', 'shows', 'journey', 'journal', 'contact']
+const MEDIA = ['gallery', 'watch', 'music']
 
 export default function Nav() {
   const [active, setActive] = useState('')
@@ -79,17 +79,6 @@ export default function Nav() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/malhar-full-copper.svg" alt="Malhar Live" className="wordmark-img" />
           </a>
-          <div className="hero-pills" aria-label="Performance formats">
-            <a href="/book?f=solo">
-              <b>Solo</b> — Singer &amp; Guitar
-            </a>
-            <a href="/book?f=duo">
-              <b>Duo</b> — With Keys
-            </a>
-            <a href="/book?f=trio">
-              <b>Trio</b> — With Drums
-            </a>
-          </div>
           <button
             className="explore-btn"
             aria-expanded={explore}
@@ -106,10 +95,10 @@ export default function Nav() {
           {explore && (
             <div id="explore-menu" className="explore-menu" onClick={() => setExplore(false)}>
               <a href="/#about">About</a>
-              <a href="/#moments">Videos</a>
+              <a href="/#watch">Videos</a>
               <a href="/#gallery">Photos</a>
               <a href="/#music">Music</a>
-              <a href="/#calendar">Calendar</a>
+              <a href="/#shows">Shows</a>
               <a href="/#journey">Journey</a>
               <a href="/#journal">Journal</a>
               <a href="/book" className="explore-cta">
@@ -139,8 +128,8 @@ export default function Nav() {
         >
           Media <span style={{ fontSize: 9 }}>▼</span>
         </button>
-        <a href="/#calendar" className={cls('calendar')}>
-          Calendar
+        <a href="/#shows" className={cls('shows')}>
+          Shows
         </a>
         <a href="/#journal" className={`${cls('journal')} hide-sm`}>
           Journal
@@ -151,7 +140,7 @@ export default function Nav() {
       </nav>
       {open && (
         <div className="nav-menu" role="menu" onClick={() => setOpen(false)}>
-          <a href="/#moments" role="menuitem">
+          <a href="/#watch" role="menuitem">
             Videos
           </a>
           <a href="/#gallery" role="menuitem">

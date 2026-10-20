@@ -1,10 +1,12 @@
 import Sparkles from './Sparkles'
-import { site, tracks } from '@/lib/site'
+import StickyPlayer from './StickyPlayer'
+import { site } from '@/lib/site'
 
-const BARS = Array.from({ length: 28 }, (_, i) => ({
-  h: 14 + ((i * 37) % 30),
-  d: ((i * 53) % 100) / 100,
-}))
+const PROOF = [
+  ['2250+', 'live shows'],
+  ['3', 'countries'],
+  ['100%', 'original songs'],
+]
 
 export default function Hero() {
   return (
@@ -15,11 +17,11 @@ export default function Hero() {
           <img src={site.heroWide} alt="" fetchPriority="high" />
         </div>
       )}
-      <Sparkles count={site.heroWide ? 14 : 28} />
+      <Sparkles count={14} />
 
-      <div className={`container hero-grid ${site.heroWide ? 'has-bg' : ''}`}>
+      <div className="container hero-grid has-bg">
         <div>
-          <p className="eyebrow">An acoustic live act</p>
+          <p className="eyebrow">Indie singer-songwriter · {site.city}</p>
           <h1 className="h1">
             MALHAR
             <br />
@@ -28,50 +30,29 @@ export default function Hero() {
           <p className="hero-by">by {site.artist}</p>
           <p className="hero-tag">Soulful originals, played live.</p>
           <p className="hero-copy">
-            Heartfelt original songs, performed with voice and acoustic guitar for weddings, private celebrations and
-            intimate venues.
+            Songs Malhar writes himself, carried by voice and acoustic guitar — and more than 2250 nights of playing
+            them to a live room, from Pune to Kuwait and West Africa.
           </p>
-          <a href="/#contact" className="btn btn-gold">
-            Contact Management <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        {!site.heroWide && (
-        <div className="hero-art">
-            {site.heroImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img className="hero-photo" src={site.heroImage} alt={`${site.artist} performing live`} />
-            ) : (
-              <div className="arch" role="img" aria-label="Malhar Live artwork">
-                <span className="arch-m">M</span>
-                <span className="arch-sub">Acoustic · Live</span>
-                <div className="eq" aria-hidden="true">
-                  {BARS.map((b, i) => (
-                    <i
-                      key={i}
-                      style={{ ['--h' as string]: `${b.h}px`, animationDelay: `${b.d}s` } as React.CSSProperties}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+          <div className="hero-cta">
+            <a href="/#music" className="btn btn-gold">
+              Hear the songs <span aria-hidden="true">▸</span>
+            </a>
+            <a href="/#watch" className="btn btn-ghost">
+              Watch him live <span aria-hidden="true">↗</span>
+            </a>
           </div>
-        )}
+          <div className="hero-proof" aria-label="Performance history">
+            {PROOF.map(([v, l]) => (
+              <span key={l}>
+                <b>{v}</b>
+                {l}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {tracks[0] && (
-        <div className="container hero-player">
-          <div className="player-shell">
-            <iframe
-              title="Malhar Live on Spotify"
-              src={`https://open.spotify.com/embed/track/${tracks[0].id}?utm_source=generator&theme=0`}
-              height="152"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            />
-          </div>
-        </div>
-      )}
+      <StickyPlayer />
     </section>
   )
 }
