@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { site } from '@/lib/site'
 
 const SECTIONS = ['about', 'journey', 'moments', 'gallery', 'music', 'calendar', 'journal', 'contact']
 const MEDIA = ['moments', 'gallery', 'music']
@@ -76,9 +75,9 @@ export default function Nav() {
     <>
       {isHome && (
         <header className="topbar" ref={topRef}>
-          <a href="/#home" className="wordmark">
-            MALHAR LIVE
-            <small>by {site.artist}</small>
+          <a href="/#home" className="wordmark" aria-label="Malhar Live home">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/malhar-full-copper.svg" alt="Malhar Live" className="wordmark-img" />
           </a>
           <div className="hero-pills" aria-label="Performance formats">
             <a href="/book?f=solo">
@@ -123,7 +122,8 @@ export default function Nav() {
     <div className={`nav ${pillVisible ? '' : 'nav-hidden'}`} ref={wrap} aria-hidden={!pillVisible}>
       <nav className="nav-pill" aria-label="Main">
         <a href="/#home" className="nav-link nav-star" aria-label="Malhar Live home">
-          ✦
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/malhar-icon-copper.svg" alt="" className="nav-star-img" />
         </a>
         <a href="/#about" className={`${cls('about')} hide-sm`}>
           About

@@ -2346,3 +2346,18 @@ body:has(.pick-bar) footer {
     padding-top: 40svh;
   }
 }
+
+/* Brand logo */
+.wordmark-img { height: 58px; width: auto; display: block; }
+.nav-star-img { height: 24px; width: auto; display: block; }
+.nav-star { display: flex; align-items: center; padding: 6px 14px; }
+.footer-logo { height: 96px; width: auto; display: block; margin: 0 auto 22px; }
+.mini-icon img { height: 28px; width: auto; display: block; }
+@media (max-width: 700px) {
+  .wordmark-img { height: 46px; }
+  .footer-logo { height: 80px; }
+}
+.nav { width: max-content; }
+@media (max-width: 700px) { .nav-star { padding: 6px 10px; } .nav-pill { gap: 2px; padding: 6px; } }
+html, body { overflow-x: clip; }
+.flow { overflow: hidden; }

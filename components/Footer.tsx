@@ -15,6 +15,8 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/malhar-full-copper.svg" alt="Malhar Live" className="footer-logo" />
         <p className="eyebrow" style={{ marginBottom: 0 }}>
           Follow our journey
         </p>
